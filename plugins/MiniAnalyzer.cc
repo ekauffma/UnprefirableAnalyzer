@@ -32,16 +32,19 @@
 #include "DataFormats/L1Trigger/interface/BXVector.h"
 #include "DataFormats/L1Trigger/interface/Jet.h"
 
-// #include "DataFormats/Math/interface/LorentzVector.h"
-
 #include "DataFormats/L1Trigger/interface/L1JetParticle.h"
 #include "DataFormats/L1Trigger/interface/L1JetParticleFwd.h"
 
 #include "DataFormats/L1TGlobal/interface/GlobalAlgBlk.h"
 #include "DataFormats/L1TGlobal/interface/GlobalExtBlk.h"
 
+#include "CondFormats/DataRecord/interface/L1TUtmTriggerMenuRcd.h"
+#include "CondFormats/L1TObjects/interface/L1TUtmTriggerMenu.h"
+
 #include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
+
+#include "L1Trigger/GlobalTriggerAnalyzer/interface/L1GtUtils.h"
 
 #include "TROOT.h"
 #include "TTree.h"
@@ -49,7 +52,6 @@
 
 #include "TH1.h"
 #include "TH2.h"
-// #include "TLorentzVector.h"
 
 using namespace l1extra;
 using namespace std;
@@ -79,7 +81,15 @@ private:
   //edm::EDGetTokenT<BXVector<l1t::Jet>> stage2JetToken_;
   edm::EDGetTokenT<GlobalExtBlkBxCollection> UnprefirableEventToken_;
   const edm::EDGetTokenT<l1t::JetBxCollection> jetBXCollectionToken_;
+  edm::EDGetTokenT< BXVector<GlobalAlgBlk> > gtAlgBlkToken;
+  edm::Handle< BXVector<GlobalAlgBlk> > gtAlgBlkHandle;
+
+
   bool Flag_IsUnprefirable;
+
+  edm::ESGetToken<L1TUtmTriggerMenu, L1TUtmTriggerMenuRcd> L1TUtmTriggerMenuEventToken;
+  const L1TUtmTriggerMenu* l1GtMenu;
+  const std::map<std::string, L1TUtmAlgorithm>* algorithmMap;
 
   // define histograms
   TH1F *n1;
@@ -131,8 +141,11 @@ private:
 MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   //stage2JetToken_(consumes<BXVector<l1t::Jet>>( edm::InputTag("caloStage2Digis","Jet","RECO"))),
   UnprefirableEventToken_(consumes<GlobalExtBlkBxCollection>(edm::InputTag("simGtExtUnprefireable"))),
-  jetBXCollectionToken_(consumes<l1t::JetBxCollection>(edm::InputTag("caloStage2Digis","Jet","RECO")))
+  jetBXCollectionToken_(consumes<l1t::JetBxCollection>(edm::InputTag("caloStage2Digis","Jet","RECO"))),
+  gtAlgBlkToken( consumes< BXVector<GlobalAlgBlk> >(edm::InputTag("gtStage2Digis","","RECO")) )
+
 {
+  L1TUtmTriggerMenuEventToken = consumesCollector().esConsumes<L1TUtmTriggerMenu, L1TUtmTriggerMenuRcd>();
   edm::Service<TFileService> fs;
   n1 = fs->make<TH1F>("nJets","Number of jets",15,0,15);
   n2 = fs->make<TH1F>("nJetTh","Jets passing E_{T} threshold", 5, -0.5, 4.5);
@@ -186,7 +199,32 @@ MiniAnalyzer::~MiniAnalyzer() {
 void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
   
+  auto menuRcd = iSetup.get<L1TUtmTriggerMenuRcd>();
+  l1GtMenu = &menuRcd.get(L1TUtmTriggerMenuEventToken);
+  algorithmMap = &(l1GtMenu->getAlgorithmMap());
   
+  //cout<<iEvent.id().event()<<endl;
+
+  iEvent.getByToken(gtAlgBlkToken, gtAlgBlkHandle);
+  if(gtAlgBlkHandle.isValid() && iEvent.id().event()==2874541){
+    std::vector<GlobalAlgBlk>::const_iterator algBlk = gtAlgBlkHandle->begin(0);
+    std::cout<<"BxVector First BX: "<<gtAlgBlkHandle->getFirstBX()<<std::endl;
+    std::cout<<"BxVector Last BX: "<<gtAlgBlkHandle->getLastBX()<<std::endl;
+    if(algBlk != gtAlgBlkHandle->end(0)){
+      for (std::map<std::string, L1TUtmAlgorithm>::const_iterator itAlgo = algorithmMap->begin(); itAlgo != algorithmMap->end(); itAlgo++) {
+  std::string algName = itAlgo->first;
+        int algBit = itAlgo->second.getIndex();
+        //int prescaleColumn = algBlk->getPreScColumn();
+        bool initialDecision = algBlk->getAlgoDecisionInitial(algBit);
+        bool intermDecision = algBlk->getAlgoDecisionInterm(algBit);
+        bool decisionFinal = algBlk->getAlgoDecisionFinal(algBit);
+        if(algBit==473 && initialDecision==1){
+          std::cout<<"L1 Path: "<<algName<<" Bit: "<<algBit<<" Initial Decision: "<<initialDecision<<" Interm Decision: "<<intermDecision<<" Final Decision: "<<decisionFinal<<std::endl;
+        }
+      }
+    }
+  }
+
   //Unprefirable
   Flag_IsUnprefirable = false;
   edm::Handle<GlobalExtBlkBxCollection> handleUnprefEventResults;
