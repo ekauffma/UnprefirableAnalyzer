@@ -18,38 +18,35 @@
 
 // system include files
 #include <memory>
+#include <iostream>
+#include <fstream>
 
 // user include files
+#include "FWCore/Common/interface/TriggerNames.h"
 #include "FWCore/Framework/interface/Frameworkfwd.h"
 #include "FWCore/Framework/interface/one/EDAnalyzer.h"
-
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
-
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
+#include "FWCore/ServiceRegistry/interface/Service.h"
 #include "FWCore/Utilities/interface/InputTag.h"
-
 #include "DataFormats/L1Trigger/interface/BXVector.h"
 #include "DataFormats/L1Trigger/interface/Jet.h"
-
 #include "DataFormats/L1Trigger/interface/L1JetParticle.h"
 #include "DataFormats/L1Trigger/interface/L1JetParticleFwd.h"
-
 #include "DataFormats/L1TGlobal/interface/GlobalAlgBlk.h"
 #include "DataFormats/L1TGlobal/interface/GlobalExtBlk.h"
-
+#include "DataFormats/PatCandidates/interface/Jet.h"
+#include "DataFormats/PatCandidates/interface/Muon.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
 #include "CondFormats/DataRecord/interface/L1TUtmTriggerMenuRcd.h"
 #include "CondFormats/L1TObjects/interface/L1TUtmTriggerMenu.h"
-
-#include "FWCore/ServiceRegistry/interface/Service.h"
 #include "CommonTools/UtilAlgos/interface/TFileService.h"
-
 #include "L1Trigger/GlobalTriggerAnalyzer/interface/L1GtUtils.h"
 
 #include "TROOT.h"
 #include "TTree.h"
 #include "TFile.h"
-
 #include "TH1.h"
 #include "TH2.h"
 
@@ -83,7 +80,9 @@ private:
   const edm::EDGetTokenT<l1t::JetBxCollection> jetBXCollectionToken_;
   edm::EDGetTokenT< BXVector<GlobalAlgBlk> > gtAlgBlkToken;
   edm::Handle< BXVector<GlobalAlgBlk> > gtAlgBlkHandle;
-
+  edm::EDGetTokenT<vector<pat::Jet>> slimmedJetsToken_;
+  edm::EDGetTokenT<vector<pat::Muon>> slimmedMuonsToken_;
+  edm::EDGetTokenT<edm::TriggerResults> trgresultsORIGToken_;
 
   bool Flag_IsUnprefirable;
   bool Flag_FirstBunchInTrain;
@@ -143,6 +142,9 @@ private:
   TH1F *h14_f;
   TH1F *h15_f;
 
+  TH2F *h_test_reco;
+  TH2F *h_test_l1;
+
   int nJets_f, nJets_u;
   float HT0_u, HTM1_u, HT0_f, HTM1_f;
   float jetEtBx0_u, jetEtBxM1_u, jetEtaBx0_u, jetEtaBxM1_u, jetPhiBx0_u, jetPhiBxM1_u, jetEtBxM2_u;
@@ -170,9 +172,13 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   UnprefirableEventToken_(consumes<GlobalExtBlkBxCollection>(edm::InputTag("simGtExtUnprefireable"))),
   jetBXCollectionToken_(consumes<l1t::JetBxCollection>(edm::InputTag("caloStage2Digis","Jet","RECO"))),
   gtAlgBlkToken( consumes< BXVector<GlobalAlgBlk> >(edm::InputTag("gtStage2Digis","","RECO")) )
-
 {
   L1TUtmTriggerMenuEventToken = consumesCollector().esConsumes<L1TUtmTriggerMenu, L1TUtmTriggerMenuRcd>();
+  slimmedJetsToken_ = consumes< std::vector<pat::Jet> >(edm::InputTag("slimmedJets") );
+  slimmedMuonsToken_ = consumes< std::vector<pat::Muon> >(edm::InputTag("slimmedMuons") );
+
+  trgresultsORIGToken_ = consumes<edm::TriggerResults>( edm::InputTag("TriggerResults::HLT") );
+
   edm::Service<TFileService> fs;
   n1_u = fs->make<TH1F>("nJets_unprefirable","Number of jets",15,0,15);
   n2_u = fs->make<TH1F>("nJetTh_unprefirable","Jets passing E_{T} threshold", 5, -0.5, 4.5);
@@ -224,6 +230,9 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   h14_f = fs->make<TH1F>("HTbx0_firstbunch","H_{T} at at BX = 0", 80, 0, 1000.);
   h15_f = fs->make<TH1F>("HTbxm1_firstbunch","H_{T} at at BX = -1", 80, 0, 1000.);
 
+  h_test_reco = fs->make<TH2F>("EtaPhi_reco","#eta vs #phi of reco jets", 40, -5, 5, 40, -M_PI, M_PI);
+  h_test_l1 = fs->make<TH2F>("EtaPhi_l1","#eta vs #phi of l1 jets", 40, -5, 5, 40, -M_PI, M_PI);
+
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   setupDataToken_ = esConsumes<SetupData, SetupRecord>();
 #endif
@@ -253,10 +262,47 @@ MiniAnalyzer::~MiniAnalyzer() {
 // member functions
 //
 
+template <typename L1Jet, typename RecoJet>
+constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(recojet.eta()) {
+  typedef decltype(recojet.eta()) Float;
+
+  Float p1 = l1jet->eta();
+  Float p2 = recojet.eta();
+  Float e1 = l1jet->eta();
+  Float e2 = recojet.eta();
+  auto dp = std::abs(p1 - p2);
+  if (dp > Float(M_PI)) dp -= Float(2 * M_PI);
+  return sqrt((e1 - e2) * (e1 - e2) + dp * dp);
+}
+
+
 // ------------ method called for each event  ------------
 void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
-  
+ 
+  edm::Handle< std::vector<pat::Jet> > slimmedJets;
+  iEvent.getByToken(slimmedJetsToken_,slimmedJets ); 
+  edm::Handle< std::vector<pat::Muon> > slimmedMuons;
+  iEvent.getByToken(slimmedMuonsToken_,slimmedMuons );
+
+
+  //get HLT_IsoMu20 result
+  bool passHLT_IsoMu20(false); 
+  edm::Handle<edm::TriggerResults> trigResults;
+  iEvent.getByToken(trgresultsORIGToken_, trigResults);
+  if( !trigResults.failedToGet() ) {
+    int N_Triggers = trigResults->size();
+    const edm::TriggerNames & trigName = iEvent.triggerNames(*trigResults);
+    for( int i_Trig = 0; i_Trig < N_Triggers; ++i_Trig ) {
+      if (trigResults.product()->accept(i_Trig)) {
+        TString TrigPath =trigName.triggerName(i_Trig);
+        if(TrigPath.Index("HLT_IsoMu20_v") >=0) passHLT_IsoMu20=true; 
+      }
+    }
+  }
+
+  if(passHLT_IsoMu20) cout<<"Event #"<<iEvent.id().event()<<", passHLT_IsoMu20 = "<<passHLT_IsoMu20<<endl;
+ 
   auto menuRcd = iSetup.get<L1TUtmTriggerMenuRcd>();
   l1GtMenu = &menuRcd.get(L1TUtmTriggerMenuEventToken);
   algorithmMap = &(l1GtMenu->getAlgorithmMap());
@@ -266,8 +312,6 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
   iEvent.getByToken(gtAlgBlkToken, gtAlgBlkHandle);
   if(gtAlgBlkHandle.isValid()){
     std::vector<GlobalAlgBlk>::const_iterator algBlk = gtAlgBlkHandle->begin(0);
-    // std::cout<<"BxVector First BX: "<<gtAlgBlkHandle->getFirstBX()<<std::endl;
-    // std::cout<<"BxVector Last BX: "<<gtAlgBlkHandle->getLastBX()<<std::endl;
     if(algBlk != gtAlgBlkHandle->end(0)){
       for (std::map<std::string, L1TUtmAlgorithm>::const_iterator itAlgo = algorithmMap->begin(); itAlgo != algorithmMap->end(); itAlgo++) {
   std::string algName = itAlgo->first;
@@ -417,7 +461,9 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     }
   }
   
-  if(Flag_IsUnprefirable){
+  if(Flag_IsUnprefirable && passHLT_IsoMu20){
+
+    cout<<"    isUnprefirable = "<<Flag_IsUnprefirable<<endl;
 
     nJets_u = 0;
     HT0_u = 0.; HTM1_u = 0.;
@@ -426,11 +472,28 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     edm::Handle<l1t::JetBxCollection> jetColl;
     iEvent.getByToken(jetBXCollectionToken_, jetColl);
     l1t::JetBxCollection jets;
-    jets = (*jetColl.product()); 
+    jets = (*jetColl.product());
 
-    // jets in bx=0
-    for (auto it = jets.begin(0); it!=jets.end(0); it++){
-      
+    edm::Handle< std::vector<pat::Jet> > slimmedJets;
+    iEvent.getByToken(slimmedJetsToken_,slimmedJets );   
+    cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
+
+    //write reco jet eta and phi
+    for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      h_test_reco->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
+    }
+
+    for (auto it = jets.begin(0); it!=jets.end(0); it++){     
+
+      h_test_l1->Fill(it->eta(),it->phi());
+
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }   
+      if (!foundMatch) continue;
+      cout<<"Found Reco Jet Match for bx=0!"<<endl;
+ 
       nJets_u = nJets_u + 1;
       
       h1_u->Fill(it->pt());
@@ -447,7 +510,16 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=-1
     for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
-      
+     
+      h_test_l1->Fill(it->eta(),it->phi());
+
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"Found Reco Jet Match for bx=-1!"<<endl;      
+
       nJets_u = nJets_u + 1;
 
       h2_u->Fill(it->pt());
@@ -464,7 +536,16 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=-2
     for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
-      
+     
+      h_test_l1->Fill(it->eta(),it->phi());
+
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"Found Reco Jet Match for bx=-2!"<<endl; 
+
       nJets_u = nJets_u + 1;
 
       if(it->pt() > jetEtBxM2_u){
@@ -475,13 +556,31 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=1
     for (auto it = jets.begin(1); it!=jets.end(1); it++){
+     
+      h_test_l1->Fill(it->eta(),it->phi());
+ 
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"Found Reco Jet Match for bx=1!"<<endl;
       nJets_u = nJets_u + 1;
     }
     // jets in bx=2
     for (auto it = jets.begin(2); it!=jets.end(2); it++){
+     
+      h_test_l1->Fill(it->eta(),it->phi());
+ 
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"Found Reco Jet Match for bx=2!"<<endl;
       nJets_u = nJets_u + 1;
     }
-   
+
     //HT
     for(int ibin = 0; ibin < 5; ibin++){   //loop over # of thresholds
       float j = 300. + ibin*50.;    //HT thresholds at BX=0

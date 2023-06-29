@@ -8,7 +8,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                                 # replace 'myfile.root' with the source file you want to use
-                                fileNames = cms.untracked.vstring('/store/data/Run2023C/ZeroBias/MINIAOD/PromptReco-v4/000/368/423/00000/23a45b1e-da4c-442d-bcb8-df5735c99ef7.root')
+                                fileNames = cms.untracked.vstring('/store/data/Run2023C/Muon1/MINIAOD/PromptReco-v4/000/367/770/00000/17020b67-65fa-49cd-8e07-5ff930d563cd.root')
                             )
 
 process.TFileService = cms.Service("TFileService",
@@ -20,7 +20,7 @@ process.demo = cms.EDAnalyzer('MiniAnalyzer',
                               )
 
 
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
