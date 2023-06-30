@@ -142,8 +142,8 @@ private:
   TH1F *h14_f;
   TH1F *h15_f;
 
-  TH2F *h_test_reco;
-  TH2F *h_test_l1;
+  // TH2F *h_test_reco;
+  // TH2F *h_test_l1;
 
   int nJets_f, nJets_u;
   float HT0_u, HTM1_u, HT0_f, HTM1_f;
@@ -173,6 +173,8 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   jetBXCollectionToken_(consumes<l1t::JetBxCollection>(edm::InputTag("caloStage2Digis","Jet","RECO"))),
   gtAlgBlkToken( consumes< BXVector<GlobalAlgBlk> >(edm::InputTag("gtStage2Digis","","RECO")) )
 {
+  
+  // tokens
   L1TUtmTriggerMenuEventToken = consumesCollector().esConsumes<L1TUtmTriggerMenu, L1TUtmTriggerMenuRcd>();
   slimmedJetsToken_ = consumes< std::vector<pat::Jet> >(edm::InputTag("slimmedJets") );
   slimmedMuonsToken_ = consumes< std::vector<pat::Muon> >(edm::InputTag("slimmedMuons") );
@@ -180,6 +182,8 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   trgresultsORIGToken_ = consumes<edm::TriggerResults>( edm::InputTag("TriggerResults::HLT") );
 
   edm::Service<TFileService> fs;
+  
+  // histograms for UnprefirableEvent
   n1_u = fs->make<TH1F>("nJets_unprefirable","Number of jets",15,0,15);
   n2_u = fs->make<TH1F>("nJetTh_unprefirable","Jets passing E_{T} threshold", 5, -0.5, 4.5);
   n3_u = fs->make<TH1F>("nJetPre60_unprefirable","Jets passing Pre-trigger threshold 60 GeV", 5, -0.5, 4.5);
@@ -205,9 +209,10 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   h14_u = fs->make<TH1F>("HTbx0_unprefirable","H_{T} at at BX = 0", 80, 0, 1000.);
   h15_u = fs->make<TH1F>("HTbxm1_unprefirable","H_{T} at at BX = -1", 80, 0, 1000.);
 
+  // histograms for FirstBunchInCrossing
   n1_f = fs->make<TH1F>("nJets_firstbunch","Number of jets",15,0,15);
   n2_f = fs->make<TH1F>("nJetTh_firstbunch","Jets passing E_{T} threshold", 5, -0.5, 4.5);
-  n3_f = fs->make<TH1F>("nJetPre60_firstbunch","Jets passing Pre-trigger threshold 60 GeV", 5, -0.5, 4.5);
+  n3_f = fs->make<TH1F>("nJetPre90_firstbunch","Jets passing Pre-trigger threshold 90 GeV", 5, -0.5, 4.5);
   n4_f = fs->make<TH1F>("nJetPre90_firstbunch","Jets passing Pre-trigger threshold 90 GeV", 5, -0.5, 4.5);
   n5_f = fs->make<TH1F>("nJetPre120_firstbunch","Jets passing Pre-trigger threshold 120 GeV", 5, -0.5, 4.5);
   n6_f = fs->make<TH1F>("nJetPre150_firstbunch","Jets passing Pre-trigger threshold 150 GeV", 5, -0.5, 4.5);
@@ -230,8 +235,8 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   h14_f = fs->make<TH1F>("HTbx0_firstbunch","H_{T} at at BX = 0", 80, 0, 1000.);
   h15_f = fs->make<TH1F>("HTbxm1_firstbunch","H_{T} at at BX = -1", 80, 0, 1000.);
 
-  h_test_reco = fs->make<TH2F>("EtaPhi_reco","#eta vs #phi of reco jets", 40, -5, 5, 40, -M_PI, M_PI);
-  h_test_l1 = fs->make<TH2F>("EtaPhi_l1","#eta vs #phi of l1 jets", 40, -5, 5, 40, -M_PI, M_PI);
+  //h_test_reco = fs->make<TH2F>("EtaPhi_reco","#eta vs #phi of reco jets", 40, -5, 5, 40, -M_PI, M_PI);
+  //h_test_l1 = fs->make<TH2F>("EtaPhi_l1","#eta vs #phi of l1 jets", 40, -5, 5, 40, -M_PI, M_PI);
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   setupDataToken_ = esConsumes<SetupData, SetupRecord>();
@@ -242,15 +247,16 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
 MiniAnalyzer::~MiniAnalyzer() {
   // do anything here that needs to be done at desctruction time
   // (e.g. close files, deallocate resources etc.)
-  //
-  // please remove this method altogether if it would be left empty
 
+
+  // unprefirableEvents
   h8_u->Sumw2(); h9_u->Sumw2(); h10_u->Sumw2(); h11_u->Sumw2(); h12_u->Sumw2(); h13_u->Sumw2();
   h9_u->Divide(h8_u); h10_u->Divide(h8_u); h11_u->Divide(h8_u); h12_u->Divide(h8_u); h13_u->Divide(h8_u);
    
   h8_f->Sumw2(); h9_f->Sumw2(); h10_f->Sumw2(); h11_f->Sumw2(); h12_f->Sumw2(); h13_f->Sumw2();
   h9_f->Divide(h8_f); h10_f->Divide(h8_f); h11_f->Divide(h8_f); h12_f->Divide(h8_f); h13_f->Divide(h8_f);
 
+  // firstBunchInTrain
   n2_u->Sumw2(); n3_u->Sumw2(); n4_u->Sumw2(); n5_u->Sumw2(); n6_u->Sumw2(); n7_u->Sumw2();
   n3_u->Divide(n2_u); n4_u->Divide(n2_u); n5_u->Divide(n2_u); n6_u->Divide(n2_u); n7_u->Divide(n2_u);
 
@@ -262,6 +268,7 @@ MiniAnalyzer::~MiniAnalyzer() {
 // member functions
 //
 
+// deltaR method (written using https://github.com/cms-sw/cmssw/blob/master/DataFormats/Math/interface/deltaR.h)
 template <typename L1Jet, typename RecoJet>
 constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(recojet.eta()) {
   typedef decltype(recojet.eta()) Float;
@@ -280,6 +287,7 @@ constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(re
 void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
  
+  // get reco jets and muons
   edm::Handle< std::vector<pat::Jet> > slimmedJets;
   iEvent.getByToken(slimmedJetsToken_,slimmedJets ); 
   edm::Handle< std::vector<pat::Muon> > slimmedMuons;
@@ -324,8 +332,10 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     }
   }
 
-  if(Flag_FirstBunchInTrain){
+  if(Flag_FirstBunchInTrain  && passHLT_IsoMu20){
     
+    cout<<"    Flag_FirstBunchInTrain = "<<Flag_FirstBunchInTrain<<endl;
+
     nJets_f = 0;
     HT0_f = 0.; HTM1_f = 0.;
     jetEtBx0_f=0.; jetEtBxM1_f=0.; jetEtaBx0_f=-99.; jetEtaBxM1_f=-99.; jetPhiBx0_f=-99.; jetPhiBxM1_f=-99.; jetEtBxM2_f=0.;
@@ -335,9 +345,18 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     l1t::JetBxCollection jets;
     jets = (*jetColl.product());
 
+    cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
+
     // jets in bx=0
     for (auto it = jets.begin(0); it!=jets.end(0); it++){
-      
+     
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"    Found Reco Jet Match for bx=0!"<<endl;
+ 
       nJets_f = nJets_f + 1;
       
       h1_f->Fill(it->pt());
@@ -354,7 +373,14 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=-1
     for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
-      
+     
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"    Found Reco Jet Match for bx=-1!"<<endl;
+ 
       nJets_f = nJets_f + 1;
 
       h2_f->Fill(it->pt());
@@ -371,7 +397,14 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=-2
     for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
-      
+     
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"    Found Reco Jet Match for bx=-2!"<<endl;
+ 
       nJets_f = nJets_f + 1;
 
       if(it->pt() > jetEtBxM2_f){
@@ -382,10 +415,26 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     // jets in bx=1
     for (auto it = jets.begin(1); it!=jets.end(1); it++){
+     
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"    Found Reco Jet Match for bx=1!"<<endl;
+
       nJets_f = nJets_f + 1;
     }
     // jets in bx=2
     for (auto it = jets.begin(2); it!=jets.end(2); it++){
+     
+      bool foundMatch = false;
+      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      }
+      if (!foundMatch) continue;
+      cout<<"    Found Reco Jet Match for bx=2!"<<endl;
+
       nJets_f = nJets_f + 1;
     }
 
@@ -474,25 +523,23 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     l1t::JetBxCollection jets;
     jets = (*jetColl.product());
 
-    edm::Handle< std::vector<pat::Jet> > slimmedJets;
-    iEvent.getByToken(slimmedJetsToken_,slimmedJets );   
     cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
 
     //write reco jet eta and phi
-    for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
-      h_test_reco->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
-    }
+    //for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      //h_test_reco->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
+    //}
 
     for (auto it = jets.begin(0); it!=jets.end(0); it++){     
 
-      h_test_l1->Fill(it->eta(),it->phi());
+     // h_test_l1->Fill(it->eta(),it->phi());
 
       bool foundMatch = false;
       for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
         if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
       }   
       if (!foundMatch) continue;
-      cout<<"Found Reco Jet Match for bx=0!"<<endl;
+      cout<<"    Found Reco Jet Match for bx=0!"<<endl;
  
       nJets_u = nJets_u + 1;
       
@@ -511,14 +558,14 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // jets in bx=-1
     for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
      
-      h_test_l1->Fill(it->eta(),it->phi());
+     // h_test_l1->Fill(it->eta(),it->phi());
 
       bool foundMatch = false;
       for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
         if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
       }
       if (!foundMatch) continue;
-      cout<<"Found Reco Jet Match for bx=-1!"<<endl;      
+      cout<<"    Found Reco Jet Match for bx=-1!"<<endl;      
 
       nJets_u = nJets_u + 1;
 
@@ -537,14 +584,14 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // jets in bx=-2
     for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
      
-      h_test_l1->Fill(it->eta(),it->phi());
+     // h_test_l1->Fill(it->eta(),it->phi());
 
       bool foundMatch = false;
       for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
         if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
       }
       if (!foundMatch) continue;
-      cout<<"Found Reco Jet Match for bx=-2!"<<endl; 
+      cout<<"    Found Reco Jet Match for bx=-2!"<<endl; 
 
       nJets_u = nJets_u + 1;
 
@@ -557,27 +604,27 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     // jets in bx=1
     for (auto it = jets.begin(1); it!=jets.end(1); it++){
      
-      h_test_l1->Fill(it->eta(),it->phi());
+     // h_test_l1->Fill(it->eta(),it->phi());
  
       bool foundMatch = false;
       for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
         if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
       }
       if (!foundMatch) continue;
-      cout<<"Found Reco Jet Match for bx=1!"<<endl;
+      cout<<"    Found Reco Jet Match for bx=1!"<<endl;
       nJets_u = nJets_u + 1;
     }
     // jets in bx=2
     for (auto it = jets.begin(2); it!=jets.end(2); it++){
      
-      h_test_l1->Fill(it->eta(),it->phi());
+     // h_test_l1->Fill(it->eta(),it->phi());
  
       bool foundMatch = false;
       for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
         if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
       }
       if (!foundMatch) continue;
-      cout<<"Found Reco Jet Match for bx=2!"<<endl;
+      cout<<"    Found Reco Jet Match for bx=2!"<<endl;
       nJets_u = nJets_u + 1;
     }
 
