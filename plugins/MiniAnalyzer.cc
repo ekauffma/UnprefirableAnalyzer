@@ -92,65 +92,29 @@ private:
   const std::map<std::string, L1TUtmAlgorithm>* algorithmMap;
 
   // define histograms
-  TH1F *n1_u;
-  TH1F *n2_u; 
-  TH1F *n3_u;
-  TH1F *n4_u;
-  TH1F *n5_u;
-  TH1F *n6_u;
-  TH1F *n7_u;
-  TH2F *n8_u;
+  TH1F *h_jetet_bx0_u;
+  TH1F *h_jetet_bxm1_u;
+  TH1F *h_jetet_bx0_bxm1_u;
+  TH1F *h_jetet_bxm2_u;
 
-  TH1F *h1_u;
-  TH1F *h2_u;
-  TH1F *h3_u;
-  TH1F *h4_u;
-  TH1F *h5_u;
-  TH1F *h6_u;
-  TH1F *h7_u;
-  TH1F *h8_u;
-  TH1F *h9_u;
-  TH1F *h10_u;
-  TH1F *h11_u;
-  TH1F *h12_u;
-  TH1F *h13_u;
-  TH1F *h14_u;
-  TH1F *h15_u;
+  TH1F *h_jeteta_bx0_u;
+  TH1F *h_jeteta_bxm1_u;
+  TH1F *h_jeteta_bx0_bxm1_u;
+  TH1F *h_jeteta_bxm2_u;
 
-  TH1F *n1_f;
-  TH1F *n2_f;
-  TH1F *n3_f;
-  TH1F *n4_f;
-  TH1F *n5_f;
-  TH1F *n6_f;
-  TH1F *n7_f;
-  TH2F *n8_f;
+  TH1F *h_jetet_bx0_f;
+  TH1F *h_jetet_bxm1_f;
+  TH1F *h_jetet_bx0_bxm1_f;
+  TH1F *h_jetet_bxm2_f;
 
-  TH1F *h1_f;
-  TH1F *h2_f;
-  TH1F *h3_f;
-  TH1F *h4_f;
-  TH1F *h5_f;
-  TH1F *h6_f;
-  TH1F *h7_f;
-  TH1F *h8_f;
-  TH1F *h9_f;
-  TH1F *h10_f;
-  TH1F *h11_f;
-  TH1F *h12_f;
-  TH1F *h13_f;
-  TH1F *h14_f;
-  TH1F *h15_f;
+  TH1F *h_jeteta_bx0_f;
+  TH1F *h_jeteta_bxm1_f;
+  TH1F *h_jeteta_bx0_bxm1_f;
+  TH1F *h_jeteta_bxm2_f;
 
   TH1I *nbx_f;
   TH1I *nbx_u;
   TH1I *h_nevt;
-
-  int nJets_f, nJets_u;
-  float HT0_u, HTM1_u, HT0_f, HTM1_f;
-  float jetEtBx0_u, jetEtBxM1_u, jetEtaBx0_u, jetEtaBxM1_u, jetPhiBx0_u, jetPhiBxM1_u, jetEtBxM2_u;
-  float jetEtBx0_f, jetEtBxM1_f, jetEtaBx0_f, jetEtaBxM1_f, jetPhiBx0_f, jetPhiBxM1_f, jetEtBxM2_f;
-
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   edm::ESGetToken<SetupData, SetupRecord> setupToken_;
@@ -185,56 +149,26 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   edm::Service<TFileService> fs;
   
   // histograms for UnprefirableEvent
-  n1_u = fs->make<TH1F>("nJets_unprefirable","Number of jets",15,0,15);
-  n2_u = fs->make<TH1F>("nJetTh_unprefirable","Jets passing E_{T} threshold", 5, -0.5, 4.5);
-  n3_u = fs->make<TH1F>("nJetPre60_unprefirable","Jets passing Pre-trigger threshold 60 GeV", 5, -0.5, 4.5);
-  n4_u = fs->make<TH1F>("nJetPre90_unprefirable","Jets passing Pre-trigger threshold 90 GeV", 5, -0.5, 4.5);
-  n5_u = fs->make<TH1F>("nJetPre120_unprefirable","Jets passing Pre-trigger threshold 120 GeV", 5, -0.5, 4.5);
-  n6_u = fs->make<TH1F>("nJetPre150_unprefirable","Jets passing Pre-trigger threshold 150 GeV", 5, -0.5, 4.5);
-  n7_u = fs->make<TH1F>("nJetPre180_unprefirable","Jets passing Pre-trigger threshold 180 GeV", 5, -0.5, 4.5);
-  n8_u = fs->make<TH2F>("EtaPhi_unprefirable","#eta vs #phi of jets passing Pre-trigger threshold", 40, -5, 5, 40, -M_PI, M_PI);
-  
-  h1_u = fs->make<TH1F>("JetEtbx0_unprefirable","Jet E_{T} at BX = 0", 40, 0, 250);
-  h2_u = fs->make<TH1F>("JetEtbxm1_unprefirable","Jet E_{T} at BX = -1", 40, 0, 250);
-  h3_u = fs->make<TH1F>("LeadJetEtbx0_unprefirable","Leading Jet E_{T} at BX = 0", 80, 0, 500);
-  h4_u = fs->make<TH1F>("LeadJetEtbxm1_unprefirable","Leading Jet E_{T} at BX = -1", 80, 0, 500);
-  h5_u = fs->make<TH1F>("LeadJetEtbxm2_unprefirable","Leading Jet E_{T} at BX = -2", 80, 0, 500);
-  h6_u = fs->make<TH1F>("LeadJetEtabx0_unprefirable","Leading Jet #eta at BX = 0", 40, -5, 5);
-  h7_u = fs->make<TH1F>("LeadJetEtabxm1_unprefirable","Leading Jet #eta at BX = -1", 40, -5, 5);
-  h8_u = fs->make<TH1F>("nJetHT_unprefirable","Jets sum passing H_{T} threshold", 5, -0.5, 4.5);
-  h9_u = fs->make<TH1F>("nJetHTPre150_unprefirable","Jets sum passing Pre-trigger H_{T} threshold 150 GeV", 5, -0.5, 4.5);
-  h10_u = fs->make<TH1F>("nJetHTPre200_unprefirable","Jets sum passing Pre-trigger H_{T} threshold 200 GeV", 5, -0.5, 4.5);
-  h11_u = fs->make<TH1F>("nJetHTPre250_unprefirable","Jets sum passing Pre-trigger H_{T} threshold 250 GeV", 5, -0.5, 4.5);
-  h12_u = fs->make<TH1F>("nJetHTPre300_unprefirable","Jets sum passing Pre-trigger H_{T} threshold 300 GeV", 5, -0.5, 4.5);
-  h13_u = fs->make<TH1F>("nJetHTPre350_unprefirable","Jets sum passing Pre-trigger H_{T} threshold 350 GeV", 5, -0.5, 4.5);
-  h14_u = fs->make<TH1F>("HTbx0_unprefirable","H_{T} at at BX = 0", 80, 0, 1000.);
-  h15_u = fs->make<TH1F>("HTbxm1_unprefirable","H_{T} at at BX = -1", 80, 0, 1000.);
+  h_jetet_bx0_u = fs->make<TH1F>("JetEt_bx0_unprefirable","Jet E_{T} at BX = 0", 40, 0, 250);
+  h_jetet_bxm1_u = fs->make<TH1F>("JetEt_bxm1_unprefirable","Jet E_{T} at BX = -1", 40, 0, 250);
+  h_jetet_bx0_bxm1_u = fs->make<TH1F>("JetEt_bx0_bxm1_unprefirable","Jet E_{T} at BX = 0 or -1", 40, 0, 250);  
+  h_jetet_bxm2_u = fs->make<TH1F>("JetEt_bxm2_unprefirable","Jet E_{T} at BX = -2", 40, 0, 250);
+
+  h_jeteta_bx0_u = fs->make<TH1F>("JetEta_bx0_unprefirable","Jet #eta at BX = 0", 40, -5, 5);
+  h_jeteta_bxm1_u = fs->make<TH1F>("JetEta_bxm1_unprefirable","Jet #eta at BX = -1", 40, -5, 5);
+  h_jeteta_bx0_bxm1_u = fs->make<TH1F>("JetEta_bx0_bxm1_unprefirable","Jet #eta at BX = 0 or -1", 40, -5, 5);
+  h_jeteta_bxm2_u = fs->make<TH1F>("JetEta_bxm2_unprefirable","Jet #eta at BX = -2", 40, -5, 5);
 
   // histograms for FirstBunchInCrossing
-  n1_f = fs->make<TH1F>("nJets_firstbunch","Number of jets",15,0,15);
-  n2_f = fs->make<TH1F>("nJetTh_firstbunch","Jets passing E_{T} threshold", 5, -0.5, 4.5);
-  n3_f = fs->make<TH1F>("nJetPre90_firstbunch","Jets passing Pre-trigger threshold 90 GeV", 5, -0.5, 4.5);
-  n4_f = fs->make<TH1F>("nJetPre90_firstbunch","Jets passing Pre-trigger threshold 90 GeV", 5, -0.5, 4.5);
-  n5_f = fs->make<TH1F>("nJetPre120_firstbunch","Jets passing Pre-trigger threshold 120 GeV", 5, -0.5, 4.5);
-  n6_f = fs->make<TH1F>("nJetPre150_firstbunch","Jets passing Pre-trigger threshold 150 GeV", 5, -0.5, 4.5);
-  n7_f = fs->make<TH1F>("nJetPre180_firstbunch","Jets passing Pre-trigger threshold 180 GeV", 5, -0.5, 4.5);
-  n8_f = fs->make<TH2F>("EtaPhi_firstbunch","#eta vs #phi of jets passing Pre-trigger threshold", 40, -5, 5, 40, -M_PI, M_PI);
+  h_jetet_bx0_f = fs->make<TH1F>("JetEt_bx0_firstbunch","Jet E_{T} at BX = 0", 40, 0, 250);
+  h_jetet_bxm1_f = fs->make<TH1F>("JetEt_bxm1_firstbunch","Jet E_{T} at BX = -1", 40, 0, 250);
+  h_jetet_bx0_bxm1_f = fs->make<TH1F>("JetEt_bx0_bxm1_firstbunch","Jet E_{T} at BX = 0 or -1", 40, 0, 250);
+  h_jetet_bxm2_f = fs->make<TH1F>("JetEt_bxm2_firstbunch","Jet E_{T} at BX = -2", 40, 0, 250);
 
-  h1_f = fs->make<TH1F>("JetEtbx0_firstbunch","Jet E_{T} at BX = 0", 40, 0, 250);
-  h2_f = fs->make<TH1F>("JetEtbxm1_firstbunch","Jet E_{T} at BX = -1", 40, 0, 250);
-  h3_f = fs->make<TH1F>("LeadJetEtbx0_firstbunch","Leading Jet E_{T} at BX = 0", 80, 0, 500);
-  h4_f = fs->make<TH1F>("LeadJetEtbxm1_firstbunch","Leading Jet E_{T} at BX = -1", 80, 0, 500);
-  h5_f = fs->make<TH1F>("LeadJetEtbxm2_firstbunch","Leading Jet E_{T} at BX = -2", 80, 0, 500);
-  h6_f = fs->make<TH1F>("LeadJetEtabx0_firstbunch","Leading Jet #eta at BX = 0", 40, -5, 5);
-  h7_f = fs->make<TH1F>("LeadJetEtabxm1_firstbunch","Leading Jet #eta at BX = -1", 40, -5, 5);
-  h8_f = fs->make<TH1F>("nJetHT_firstbunch","Jets sum passing H_{T} threshold", 5, -0.5, 4.5);
-  h9_f = fs->make<TH1F>("nJetHTPre150_firstbunch","Jets sum passing Pre-trigger H_{T} threshold 150 GeV", 5, -0.5, 4.5);
-  h10_f = fs->make<TH1F>("nJetHTPre200_firstbunch","Jets sum passing Pre-trigger H_{T} threshold 200 GeV", 5, -0.5, 4.5);
-  h11_f = fs->make<TH1F>("nJetHTPre250_firstbunch","Jets sum passing Pre-trigger H_{T} threshold 250 GeV", 5, -0.5, 4.5);
-  h12_f = fs->make<TH1F>("nJetHTPre300_firstbunch","Jets sum passing Pre-trigger H_{T} threshold 300 GeV", 5, -0.5, 4.5);
-  h13_f = fs->make<TH1F>("nJetHTPre350_firstbunch","Jets sum passing Pre-trigger H_{T} threshold 350 GeV", 5, -0.5, 4.5);
-  h14_f = fs->make<TH1F>("HTbx0_firstbunch","H_{T} at at BX = 0", 80, 0, 1000.);
-  h15_f = fs->make<TH1F>("HTbxm1_firstbunch","H_{T} at at BX = -1", 80, 0, 1000.);
+  h_jeteta_bx0_f = fs->make<TH1F>("JetEta_bx0_firstbunch","Jet #eta at BX = 0", 40, -5, 5);
+  h_jeteta_bxm1_f = fs->make<TH1F>("JetEta_bxm1_firstbunch","Jet #eta at BX = -1", 40, -5, 5);
+  h_jeteta_bx0_bxm1_f = fs->make<TH1F>("JetEta_bx0_bxm1_firstbunch","Jet #eta at BX = 0 or -1", 40, -5, 5);
+  h_jeteta_bxm2_f = fs->make<TH1F>("JetEta_bxm2_firstbunch","Jet #eta at BX = -2", 40, -5, 5);
 
   nbx_f = fs->make<TH1I>("nJets_bx_firstbunch", "Number of jets per bx",5,-2.0,2.0);
   nbx_u = fs->make<TH1I>("nJets_bx_unprefirable", "Number of jets per bx",5,-2.0,2.0);
@@ -248,23 +182,6 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
 }
 
 MiniAnalyzer::~MiniAnalyzer() {
-  // do anything here that needs to be done at desctruction time
-  // (e.g. close files, deallocate resources etc.)
-
-
-  // unprefirableEvents
-  h8_u->Sumw2(); h9_u->Sumw2(); h10_u->Sumw2(); h11_u->Sumw2(); h12_u->Sumw2(); h13_u->Sumw2();
-  h9_u->Divide(h8_u); h10_u->Divide(h8_u); h11_u->Divide(h8_u); h12_u->Divide(h8_u); h13_u->Divide(h8_u);
-   
-  h8_f->Sumw2(); h9_f->Sumw2(); h10_f->Sumw2(); h11_f->Sumw2(); h12_f->Sumw2(); h13_f->Sumw2();
-  h9_f->Divide(h8_f); h10_f->Divide(h8_f); h11_f->Divide(h8_f); h12_f->Divide(h8_f); h13_f->Divide(h8_f);
-
-  // firstBunchInTrain
-  n2_u->Sumw2(); n3_u->Sumw2(); n4_u->Sumw2(); n5_u->Sumw2(); n6_u->Sumw2(); n7_u->Sumw2();
-  n3_u->Divide(n2_u); n4_u->Divide(n2_u); n5_u->Divide(n2_u); n6_u->Divide(n2_u); n7_u->Divide(n2_u);
-
-  n2_f->Sumw2(); n3_f->Sumw2(); n4_f->Sumw2(); n5_f->Sumw2(); n6_f->Sumw2(); n7_f->Sumw2();
-  n3_f->Divide(n2_f); n4_f->Divide(n2_f); n5_f->Divide(n2_f); n6_f->Divide(n2_f); n7_f->Divide(n2_f);
 }
 
 //
@@ -339,10 +256,6 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
     
     cout<<"    Flag_FirstBunchInTrain = "<<Flag_FirstBunchInTrain<<endl;
 
-    nJets_f = 0;
-    HT0_f = 0.; HTM1_f = 0.;
-    jetEtBx0_f=0.; jetEtBxM1_f=0.; jetEtaBx0_f=-99.; jetEtaBxM1_f=-99.; jetPhiBx0_f=-99.; jetPhiBxM1_f=-99.; jetEtBxM2_f=0.;
-  
     edm::Handle<l1t::JetBxCollection> jetColl;
     iEvent.getByToken(jetBXCollectionToken_, jetColl);
     l1t::JetBxCollection jets;
@@ -350,182 +263,70 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
 
-    // jets in bx=0
-    for (auto it = jets.begin(0); it!=jets.end(0); it++){
+    // iterate through reco jets
+    for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
      
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      bool match_bx0 = false;
+      bool match_bxm1 = false;
+ 
+      // l1 jets in bx=0
+      for (auto it = jets.begin(0); it!=jets.end(0); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
+          match_bx0=true;
+          nbx_f->Fill(0);
+          h_jetet_bx0_f->Fill((*slimmedJets)[i].pt());
+          h_jeteta_bx0_f->Fill((*slimmedJets)[i].eta());          
           break;
         }
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=0!"<<endl;
 
-      nbx_f->Fill(0);
- 
-      nJets_f = nJets_f + 1;
-      
-      h1_f->Fill((*slimmedJets)[i_match].pt());
-      HT0_f=HT0_f+(*slimmedJets)[i_match].pt();
-      
-      if((*slimmedJets)[i_match].pt() > jetEtBx0_f){
-        jetEtBx0_f = (*slimmedJets)[i_match].pt();
-        jetEtaBx0_f = (*slimmedJets)[i_match].eta();
-        jetPhiBx0_f = (*slimmedJets)[i_match].phi();
-      }
-
-    }
-    h14_f->Fill(HT0_f);
-
-    // jets in bx=-1
-    for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
-     
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      // l1 jets in bx=-1
+      for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
+          match_bxm1=true;
+          nbx_f->Fill(-1);
+          h_jetet_bxm1_f->Fill((*slimmedJets)[i].pt());
+          h_jeteta_bxm1_f->Fill((*slimmedJets)[i].eta());
           break;
         }
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=-1!"<<endl;
- 
-      nbx_f->Fill(-1);
 
-      nJets_f = nJets_f + 1;
-
-      h2_f->Fill((*slimmedJets)[i_match].pt());
-      HTM1_f=HTM1_f+(*slimmedJets)[i_match].pt();
-    
-      if((*slimmedJets)[i_match].pt() > jetEtBxM1_f){
-        jetEtBxM1_f = (*slimmedJets)[i_match].pt();
-        jetEtaBxM1_f = (*slimmedJets)[i_match].eta();
-        jetPhiBxM1_f = (*slimmedJets)[i_match].phi();
-      }
-
-    }
-    h15_f->Fill(HTM1_f); 
-
-    // jets in bx=-2
-    for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
-     
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      // l1 jets in bx=-2
+      for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
+          nbx_f->Fill(-2);
+          h_jetet_bxm2_f->Fill((*slimmedJets)[i].pt());
+          h_jeteta_bxm2_f->Fill((*slimmedJets)[i].eta());
           break;
         }
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=-2!"<<endl;
- 
-      nbx_f->Fill(-2);
 
-      nJets_f = nJets_f + 1;
-
-      if((*slimmedJets)[i_match].pt() > jetEtBxM2_f){
-        jetEtBxM2_f = (*slimmedJets)[i_match].pt(); 
-      }
-
-    }
-
-    // jets in bx=1
-    for (auto it = jets.begin(1); it!=jets.end(1); it++){
-     
-      bool foundMatch = false;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
-        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
-      }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=1!"<<endl;
-
-      nbx_f->Fill(1);
-
-      nJets_f = nJets_f + 1;
-    }
-    // jets in bx=2
-    for (auto it = jets.begin(2); it!=jets.end(2); it++){
-     
-      bool foundMatch = false;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
-        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
-      }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=2!"<<endl;
-
-      nbx_f->Fill(2);
-
-      nJets_f = nJets_f + 1;
-    }
-
-    //HT
-    for(int ibin = 0; ibin < 5; ibin++){   //loop over # of thresholds
-      float j = 300. + ibin*50.;    //HT thresholds at BX=0
-      std::string s = std::to_string(j);
-      char const *pchar = s.c_str();
-      h8_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h9_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h10_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h11_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h12_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h13_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      if(HT0_f > j){
-        h8_f->Fill(ibin);   //fill the BX=0 denominator
-        float k = 150. + ibin*50.;    //HT thresholds at BX=-1
-        if(HTM1_f > k){   //fill the BX=-1 numerators
-          h9_f->Fill(ibin);
-          h10_f->Fill(ibin);
-          h11_f->Fill(ibin);
-          h12_f->Fill(ibin);
-          h13_f->Fill(ibin);
+      // l1 jets in bx=1
+      for (auto it = jets.begin(1); it!=jets.end(1); it++){
+	// check if match
+	if(deltaR(it, (*slimmedJets)[i])<0.4) {
+          nbx_f->Fill(1);
+          break;
         }
       }
-    }
 
-    if(jetEtBx0_f > 0.){
-      if(jetEtBx0_f > 120. && jetEtBxM1_f > 60.) n8_f->Fill(jetEtaBxM1_f, jetPhiBxM1_f);
-      for(int ibin = 0; ibin < 5; ibin++){   //loop over # of thresholds
-        float j = 120. + ibin*30.;    //jet pt thresholds at BX=0
-        std::string s = std::to_string(j);
-        char const *pchar = s.c_str();
-        n2_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n3_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n4_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n5_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n6_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n7_f->GetXaxis()->SetBinLabel(ibin+1, pchar);
-
-        if(jetEtBx0_f > j){
-          n2_f->Fill(ibin);   //fill the BX=0 denominator
-          float k = 60. + ibin*30.;    //jet pt thresholds at BX=-1
-          if(jetEtBxM1_f > k){   //fill the BX=-1 numerators
-            n8_f->Fill(jetEtaBxM1_f, jetPhiBxM1_f);
-            if(jetEtBxM1_f > k) n3_f->Fill(ibin);
-            if(jetEtBxM1_f > k) n4_f->Fill(ibin);
-            if(jetEtBxM1_f > k) n5_f->Fill(ibin);
-            if(jetEtBxM1_f > k) n6_f->Fill(ibin);
-            if(jetEtBxM1_f > k) n7_f->Fill(ibin);
-          }
+      // l1 jets in bx=2
+      for (auto it = jets.begin(2); it!=jets.end(2); it++){
+        // check if match
+        if(deltaR(it, (*slimmedJets)[i])<0.4) {
+          nbx_f->Fill(2);
+          break;
         }
       }
+
+      if(match_bx0 || match_bxm1){
+        h_jetet_bx0_bxm1_f->Fill((*slimmedJets)[i].pt());
+        h_jeteta_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+      }
     }
-
-    if(jetEtBxM1_f > 60. ) std::cout<<"jetEtBx0 (FirstBunchInTrain): "<<jetEtBx0_f<<"\t"<<"jetEtBxM1 (FirstBunchInTrain): "<<jetEtBxM1_f<<std::endl;
-    n1_f->Fill(nJets_f);
-    h3_f->Fill(jetEtBx0_f);
-    h4_f->Fill(jetEtBxM1_f);
-    h5_f->Fill(jetEtBxM2_f);
-    h6_f->Fill(jetEtaBx0_f);
-    h7_f->Fill(jetEtaBxM1_f);
-
   }
 
   //Unprefirable
@@ -553,10 +354,6 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     cout<<"    isUnprefirable = "<<Flag_IsUnprefirable<<endl;
 
-    nJets_u = 0;
-    HT0_u = 0.; HTM1_u = 0.;
-    jetEtBx0_u=0.; jetEtBxM1_u=0.; jetEtaBx0_u=-99.; jetEtaBxM1_u=-99.; jetPhiBx0_u=-99.; jetPhiBxM1_u=-99.; jetEtBxM2_u=0.;
-    
     edm::Handle<l1t::JetBxCollection> jetColl;
     iEvent.getByToken(jetBXCollectionToken_, jetColl);
     l1t::JetBxCollection jets;
@@ -564,184 +361,70 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 
     cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
 
-    for (auto it = jets.begin(0); it!=jets.end(0); it++){     
+    // iterate through reco jets
+    for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
 
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      bool match_bx0 = false;
+      bool match_bxm1 = false;
+
+      // l1 jets in bx=0
+      for (auto it = jets.begin(0); it!=jets.end(0); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
-          break;
+           match_bx0=true;
+           nbx_u->Fill(0);
+           h_jetet_bx0_u->Fill((*slimmedJets)[i].pt());
+           h_jeteta_bx0_u->Fill((*slimmedJets)[i].eta());
+           break;
         }
-      }   
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=0!"<<endl;
-
-      nbx_u->Fill(0);
- 
-      nJets_u = nJets_u + 1;
-      
-      h1_u->Fill((*slimmedJets)[i_match].pt());
-      HT0_u=HT0_u+(*slimmedJets)[i_match].pt();
-      
-      if((*slimmedJets)[i_match].pt() > jetEtBx0_u){
-        jetEtBx0_u = (*slimmedJets)[i_match].pt();
-        jetEtaBx0_u = (*slimmedJets)[i_match].eta();
-        jetPhiBx0_u = (*slimmedJets)[i_match].phi();
       }
 
-    }
-    h14_u->Fill(HT0_u);
-
-    // jets in bx=-1
-    for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
-
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      // l1 jets in bx=-1
+      for (auto it = jets.begin(-1); it!=jets.end(-1); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
-          break;
+           match_bxm1=true;
+           nbx_u->Fill(-1);
+           h_jetet_bxm1_u->Fill((*slimmedJets)[i].pt());
+           h_jeteta_bxm1_u->Fill((*slimmedJets)[i].eta());
+           break;
         }
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=-1!"<<endl;      
 
-      nbx_u->Fill(-1);
-
-      nJets_u = nJets_u + 1;
-
-      h2_u->Fill((*slimmedJets)[i_match].pt());
-      HTM1_u=HTM1_u+(*slimmedJets)[i_match].pt();
-    
-      if((*slimmedJets)[i_match].pt() > jetEtBxM1_u){
-        jetEtBxM1_u = (*slimmedJets)[i_match].pt();
-        jetEtaBxM1_u = (*slimmedJets)[i_match].eta();
-        jetPhiBxM1_u = (*slimmedJets)[i_match].phi();
-      }
-
-    }
-    h15_u->Fill(HTM1_u); 
-
-    // jets in bx=-2
-    for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
-     
-      bool foundMatch = false;
-      long unsigned int i_match = 0;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+      // l1 jets in bx=-2
+      for (auto it = jets.begin(-2); it!=jets.end(-2); it++){
+        // check if match
         if(deltaR(it, (*slimmedJets)[i])<0.4) {
-          foundMatch = true;
-          i_match = i;
-          break;
+           nbx_u->Fill(-2);
+           h_jetet_bxm2_u->Fill((*slimmedJets)[i].pt());
+           h_jeteta_bxm2_u->Fill((*slimmedJets)[i].eta());
+           break;
         }
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=-2!"<<endl; 
 
-      nbx_u->Fill(-2);
-
-      nJets_u = nJets_u + 1;
-
-      if((*slimmedJets)[i_match].pt() > jetEtBxM2_u){
-        jetEtBxM2_u = (*slimmedJets)[i_match].pt(); 
+      // l1 jets in bx=1
+      for (auto it = jets.begin(1); it!=jets.end(1); it++){
+        // check if match
+        if(deltaR(it, (*slimmedJets)[i])<0.4) {
+          nbx_u->Fill(1);
+        }
       }
 
-    }
-
-    // jets in bx=1
-    for (auto it = jets.begin(1); it!=jets.end(1); it++){
-     
-     // h_test_l1->Fill(it->eta(),it->phi());
+      // l1 jets in bx=2
+      for (auto it = jets.begin(2); it!=jets.end(2); it++){
+        // check if match
+        if(deltaR(it, (*slimmedJets)[i])<0.4) {
+          nbx_u->Fill(2);
+        }
+      }
  
-      bool foundMatch = false;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
-        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
+      if(match_bx0 || match_bxm1){
+        h_jetet_bx0_bxm1_u->Fill((*slimmedJets)[i].pt());
+        h_jeteta_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
       }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=1!"<<endl;
 
-      nbx_u->Fill(1);
-
-      nJets_u = nJets_u + 1;
-    }
-    // jets in bx=2
-    for (auto it = jets.begin(2); it!=jets.end(2); it++){
-     
-     // h_test_l1->Fill(it->eta(),it->phi());
- 
-      bool foundMatch = false;
-      for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
-        if(deltaR(it, (*slimmedJets)[i])<0.4) foundMatch = true;
-      }
-      if (!foundMatch) continue;
-      cout<<"    Found Reco Jet Match for bx=2!"<<endl;
-      
-      nbx_u->Fill(2);
-
-      nJets_u = nJets_u + 1;
     }
 
-    //HT
-    for(int ibin = 0; ibin < 5; ibin++){   //loop over # of thresholds
-      float j = 300. + ibin*50.;    //HT thresholds at BX=0
-      std::string s = std::to_string(j);
-      char const *pchar = s.c_str();
-      h8_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h9_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h10_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h11_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h12_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      h13_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-      if(HT0_u > j){
-        h8_u->Fill(ibin);   //fill the BX=0 denominator
-        float k = 150. + ibin*50.;    //HT thresholds at BX=-1
-        if(HTM1_u > k){   //fill the BX=-1 numerators
-          h9_u->Fill(ibin);
-          h10_u->Fill(ibin);
-          h11_u->Fill(ibin);
-          h12_u->Fill(ibin);
-          h13_u->Fill(ibin);
-        }
-      }
-    }
-  
-    if(jetEtBx0_u > 0.){
-      if(jetEtBx0_u > 120. && jetEtBxM1_u > 60.) n8_u->Fill(jetEtaBxM1_u, jetPhiBxM1_u);
-      for(int ibin = 0; ibin < 5; ibin++){   //loop over # of thresholds
-        float j = 120. + ibin*30.;    //jet pt thresholds at BX=0
-        std::string s = std::to_string(j);
-        char const *pchar = s.c_str();
-        n2_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n3_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n4_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n5_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n6_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-        n7_u->GetXaxis()->SetBinLabel(ibin+1, pchar);
-
-        if(jetEtBx0_u > j){
-          n2_u->Fill(ibin);   //fill the BX=0 denominator
-          float k = 60. + ibin*30.;    //jet pt thresholds at BX=-1
-          if(jetEtBxM1_u > k){   //fill the BX=-1 numerators
-            n8_u->Fill(jetEtaBxM1_u, jetPhiBxM1_u);
-            if(jetEtBxM1_u > k) n3_u->Fill(ibin);
-            if(jetEtBxM1_u > k) n4_u->Fill(ibin);
-            if(jetEtBxM1_u > k) n5_u->Fill(ibin);
-            if(jetEtBxM1_u > k) n6_u->Fill(ibin);
-            if(jetEtBxM1_u > k) n7_u->Fill(ibin);
-          }
-        }
-      }
-    }
-   
-    if(jetEtBxM1_u > 60. ) std::cout<<"jetEtBx0 (Unprefirable): "<<jetEtBx0_u<<"\t"<<"jetEtBxM1 (Unprefirable): "<<jetEtBxM1_u<<std::endl;
-    n1_u->Fill(nJets_u);
-    h3_u->Fill(jetEtBx0_u);
-    h4_u->Fill(jetEtBxM1_u);
-    h5_u->Fill(jetEtBxM2_u);
-    h6_u->Fill(jetEtaBx0_u);
-    h7_u->Fill(jetEtaBxM1_u);
   }
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
