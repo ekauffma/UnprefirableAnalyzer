@@ -2,7 +2,7 @@ import sys
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName = 'Muon1_2023C_manyruns_recoInfo'
+config.General.requestName = 'Muon1_2023C_manyruns_recoInfo_v4'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 
