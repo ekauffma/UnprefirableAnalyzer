@@ -372,9 +372,9 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       // match jets and fill histograms
       bool match_bx0 = checkMatchBX((*slimmedJets)[i], jets, 0, nbx_f, h_jetet_bx0_f, h_jeteta_bx0_f, h_jetetaphi_bx0_f, h_jetetaphi_bx0_on_f, h_jeteres_bx0_f);
       bool match_bxm1 = checkMatchBX((*slimmedJets)[i], jets, -1, nbx_f, h_jetet_bxm1_f, h_jeteta_bxm1_f, h_jetetaphi_bxm1_f, h_jetetaphi_bxm1_on_f, h_jeteres_bxm1_f);
-      bool match_bxm2 = checkMatchBX((*slimmedJets)[i], jets, -2, nbx_f, h_jetet_bxm1_f, h_jeteta_bxm1_f, h_jetetaphi_bxm1_f, h_jetetaphi_bxm1_on_f, h_jeteres_bxm1_f);
-      bool match_bx1 = checkMatchBX((*slimmedJets)[i], jets, 1, nbx_f, h_jetet_bxm1_f, h_jeteta_bxm1_f, h_jetetaphi_bxm1_f, h_jetetaphi_bxm1_on_f, h_jeteres_bxm1_f);
-      bool match_bx2 = checkMatchBX((*slimmedJets)[i], jets, 2, nbx_f, h_jetet_bxm1_f, h_jeteta_bxm1_f, h_jetetaphi_bxm1_f, h_jetetaphi_bxm1_on_f, h_jeteres_bxm1_f);
+      bool match_bxm2 = checkMatchBX((*slimmedJets)[i], jets, -2, nbx_f, h_jetet_bxm2_f, h_jeteta_bxm2_f, h_jetetaphi_bxm2_f, h_jetetaphi_bxm2_on_f, h_jeteres_bxm2_f);
+      bool match_bx1 = checkMatchBX((*slimmedJets)[i], jets, 1, nbx_f, h_jetet_bx1_f, h_jeteta_bx1_f, h_jetetaphi_bx1_f, h_jetetaphi_bx1_on_f, h_jeteres_bx1_f);
+      bool match_bx2 = checkMatchBX((*slimmedJets)[i], jets, 2, nbx_f, h_jetet_bx2_f, h_jeteta_bx2_f, h_jetetaphi_bx2_f, h_jetetaphi_bx2_on_f, h_jeteres_bx2_f);
 
       if(match_bx0 || match_bxm1){
         h_jetet_bx0_bxm1_f->Fill((*slimmedJets)[i].pt());
@@ -421,9 +421,9 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
       // match jets and fill histograms
       bool match_bx0 = checkMatchBX((*slimmedJets)[i], jets, 0, nbx_u, h_jetet_bx0_u, h_jeteta_bx0_u, h_jetetaphi_bx0_u, h_jetetaphi_bx0_on_u, h_jeteres_bx0_u);
       bool match_bxm1 = checkMatchBX((*slimmedJets)[i], jets, -1, nbx_u, h_jetet_bxm1_u, h_jeteta_bxm1_u, h_jetetaphi_bxm1_u, h_jetetaphi_bxm1_on_u, h_jeteres_bxm1_u);
-      bool match_bxm2 = checkMatchBX((*slimmedJets)[i], jets, -2, nbx_u, h_jetet_bxm1_u, h_jeteta_bxm1_u, h_jetetaphi_bxm1_u, h_jetetaphi_bxm1_on_u, h_jeteres_bxm1_u);
-      bool match_bx1 = checkMatchBX((*slimmedJets)[i], jets, 1, nbx_u, h_jetet_bxm1_u, h_jeteta_bxm1_u, h_jetetaphi_bxm1_u, h_jetetaphi_bxm1_on_u, h_jeteres_bxm1_u);
-      bool match_bx2 = checkMatchBX((*slimmedJets)[i], jets, 2, nbx_u, h_jetet_bxm1_u, h_jeteta_bxm1_u, h_jetetaphi_bxm1_u, h_jetetaphi_bxm1_on_u, h_jeteres_bxm1_u);
+      bool match_bxm2 = checkMatchBX((*slimmedJets)[i], jets, -2, nbx_u, h_jetet_bxm2_u, h_jeteta_bxm2_u, h_jetetaphi_bxm2_u, h_jetetaphi_bxm2_on_u, h_jeteres_bxm2_u);
+      bool match_bx1 = checkMatchBX((*slimmedJets)[i], jets, 1, nbx_u, h_jetet_bx1_u, h_jeteta_bx1_u, h_jetetaphi_bx1_u, h_jetetaphi_bx1_on_u, h_jeteres_bx1_u);
+      bool match_bx2 = checkMatchBX((*slimmedJets)[i], jets, 2, nbx_u, h_jetet_bx2_u, h_jeteta_bx2_u, h_jetetaphi_bx2_u, h_jetetaphi_bx2_on_u, h_jeteres_bx2_u);
 
       if(match_bx0 || match_bxm1){
         h_jetet_bx0_bxm1_u->Fill((*slimmedJets)[i].pt());
