@@ -1,9 +1,9 @@
 // -*- C++ -*-
 //
-// Package:    L1JetMini/UnprefirableAnalyzer
+// Package:    L1Trigger/UnprefirableAnalyzer
 // Class:      UnprefirableAnalyzer
 //
-/**\class UnprefirableAnalyzer UnprefirableAnalyzer.cc L1JetMini/UnprefirableAnalyzer/plugins/UnprefirableAnalyzer.cc
+/**\class UnprefirableAnalyzer UnprefirableAnalyzer.cc L1Trigger/UnprefirableAnalyzer/plugins/UnprefirableAnalyzer.cc
 
  Description: [one line class summary]
 

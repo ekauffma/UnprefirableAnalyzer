@@ -1,6 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process("L1JetMini")
+process = cms.Process("L1Trigger")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
