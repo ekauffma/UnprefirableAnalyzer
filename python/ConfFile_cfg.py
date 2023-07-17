@@ -15,7 +15,7 @@ process.TFileService = cms.Service("TFileService",
                                        fileName = cms.string('testhisto.root')
                                    )
 
-process.demo = cms.EDAnalyzer('MiniAnalyzer',
+process.demo = cms.EDAnalyzer('UnprefirableAnalyzer',
 
                               )
 
