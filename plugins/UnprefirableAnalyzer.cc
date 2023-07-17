@@ -1,9 +1,9 @@
 // -*- C++ -*-
 //
-// Package:    L1JetMini/MiniAnalyzer
-// Class:      MiniAnalyzer
+// Package:    L1JetMini/UnprefirableAnalyzer
+// Class:      UnprefirableAnalyzer
 //
-/**\class MiniAnalyzer MiniAnalyzer.cc L1JetMini/MiniAnalyzer/plugins/MiniAnalyzer.cc
+/**\class UnprefirableAnalyzer UnprefirableAnalyzer.cc L1JetMini/UnprefirableAnalyzer/plugins/UnprefirableAnalyzer.cc
 
  Description: [one line class summary]
 
@@ -62,10 +62,10 @@ using namespace std;
 // This will improve performance in multithreaded jobs.
 
 
-class MiniAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> {
+class UnprefirableAnalyzer : public edm::one::EDAnalyzer<edm::one::SharedResources> {
 public:
-  explicit MiniAnalyzer(const edm::ParameterSet&);
-  ~MiniAnalyzer() override;
+  explicit UnprefirableAnalyzer(const edm::ParameterSet&);
+  ~UnprefirableAnalyzer() override;
 
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
@@ -169,7 +169,7 @@ private:
 //
 // constructors and destructor
 //
-MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
+UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   UnprefirableEventToken_(consumes<GlobalExtBlkBxCollection>(edm::InputTag("simGtExtUnprefireable"))),
   jetBXCollectionToken_(consumes<l1t::JetBxCollection>(edm::InputTag("caloStage2Digis","Jet","RECO"))),
   gtAlgBlkToken( consumes< BXVector<GlobalAlgBlk> >(edm::InputTag("gtStage2Digis","","RECO")) )
@@ -262,7 +262,7 @@ MiniAnalyzer::MiniAnalyzer(const edm::ParameterSet& iConfig):
   //now do what ever initialization is needed
 }
 
-MiniAnalyzer::~MiniAnalyzer() {
+UnprefirableAnalyzer::~UnprefirableAnalyzer() {
 }
 
 //
@@ -307,7 +307,7 @@ bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection
 }
 
 // ------------ method called for each event  ------------
-void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
+void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
  
   // get reco jets and muons
@@ -443,17 +443,17 @@ void MiniAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSet
 }
 
 // ------------ method called once each job just before starting event loop  ------------
-void MiniAnalyzer::beginJob() {
+void UnprefirableAnalyzer::beginJob() {
   // please remove this method if not needed
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
-void MiniAnalyzer::endJob() {
+void UnprefirableAnalyzer::endJob() {
   // please remove this method if not needed
 }
 
 // ------------ method fills 'descriptions' with the allowed parameters for the module  ------------
-void MiniAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
+void UnprefirableAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions) {
   //The following says we do not know what parameters are allowed so do no validation
   // Please change this to state exactly what you do use, even if it is no parameters
   edm::ParameterSetDescription desc;
@@ -468,4 +468,4 @@ void MiniAnalyzer::fillDescriptions(edm::ConfigurationDescriptions& descriptions
 }
 
 //define this as a plug-in
-DEFINE_FWK_MODULE(MiniAnalyzer);
+DEFINE_FWK_MODULE(UnprefirableAnalyzer);
