@@ -7,7 +7,7 @@ This ensures that any activity we see in BX=-1 will be due to pre-firing.
 The second is the Unprefirable method, which flags when both BX=0 and BX=-3 are filled. 
 Due to L1 Trigger rules, if a BX is fired, the subsequent two BX's are vetoed.
 
-Here is a brief outline of the logic used in the analyzer (plugins/MiniAnalyzer.cc):
+Here is a brief outline of the logic used in the analyzer (plugins/UnprefirableAnalyzer.cc):
 
 1. First, each event is checked to see if it passes `HLT_IsoMu20`. If so, we continue with this event.
 2. Then, the event is checked to see if it passes the `FirstBunchInTrain` flag.
