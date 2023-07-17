@@ -59,7 +59,7 @@ process.TFileService = cms.Service("TFileService",
                                        fileName = cms.string('out_hist.root')
                                    )
 
-process.demo = cms.EDAnalyzer('MiniAnalyzer',
+process.demo = cms.EDAnalyzer('UnprefirableAnalyzer',
 
                               )
 
