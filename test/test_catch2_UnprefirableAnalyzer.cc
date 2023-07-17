@@ -2,13 +2,13 @@
 #include "FWCore/TestProcessor/interface/TestProcessor.h"
 #include "FWCore/Utilities/interface/Exception.h"
 
-static constexpr auto s_tag = "[MiniAnalyzer]";
+static constexpr auto s_tag = "[UnprefirableAnalyzer]";
 
-TEST_CASE("Standard checks of MiniAnalyzer", s_tag) {
+TEST_CASE("Standard checks of UnprefirableAnalyzer", s_tag) {
   const std::string baseConfig{
       R"_(from FWCore.TestProcessor.TestProcess import *
 process = TestProcess()
-process.toTest = cms.EDProducer("MiniAnalyzer"
+process.toTest = cms.EDProducer("UnprefirableAnalyzer"
 #necessary configuration parameters
  )
 process.moduleToTest(process.toTest)
