@@ -274,8 +274,8 @@ template <typename L1Jet, typename RecoJet>
 constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(recojet.eta()) {
   typedef decltype(recojet.eta()) Float;
 
-  Float p1 = l1jet->eta();
-  Float p2 = recojet.eta();
+  Float p1 = l1jet->phi();
+  Float p2 = recojet.phi();
   Float e1 = l1jet->eta();
   Float e2 = recojet.eta();
   auto dp = std::abs(p1 - p2);
