@@ -289,18 +289,31 @@ bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection
 
   bool match = false;
 
+  float minDeltaR = 999.0;
+  float matchedPt = 0.0;
+  float matchedEta = 0.0;
+  float matchedPhi = 0.0;
+
   for (auto it = l1jetcollection.begin(bx); it!=l1jetcollection.end(bx); it++){
     // check if match
-    if(deltaR(it, recojet)<0.4 && recojet.pt()>30) {
+    float currentDeltaR = deltaR(it, recojet);
+    if(currentDeltaR<0.4 && recojet.pt()>30) {
       match = true;
-      nbx->Fill(bx);
-      h_jetet->Fill(recojet.pt());
-      h_jeteta->Fill(recojet.eta());
-      h_jetetaphi->Fill(recojet.eta(), recojet.phi());
-      h_jetetaphi_on->Fill(it->eta(),it->phi());
-      h_jeteres->Fill(recojet.pt()/it->pt());
-      break;
+      if (currentDeltaR < minDeltaR){
+        minDeltaR = currentDeltaR;
+        matchedPt = it->pt();
+        matchedEta = it->eta();
+        matchedPhi = it->phi();
+      }
     }
+  }
+
+  if(match){
+    nbx->Fill(bx);
+    h_jetet->Fill(recojet.pt());
+    h_jetetaphi->Fill(recojet.eta(), recojet.phi());
+    h_jetetaphi_on->Fill(matchedEta, matchedPhi);
+    h_jeteres->Fill(matchedPt/recojet.pt());
   }
 
   return match;
