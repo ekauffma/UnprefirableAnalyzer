@@ -446,7 +446,7 @@ def main(file_path, out_dir):
     JetEResbx0_u.SetLineColor(2)
     JetEResbx0_u.SetMarkerColor(2)
     JetEResbx0_u.SetMarkerStyle(47)
-    JetEResbx0_u.GetXaxis().SetTitle("Offline Jet p_{T} / Online Jet p_{T}")
+    JetEResbx0_u.GetXaxis().SetTitle("Online Jet p_{T} / Offline Jet p_{T}")
     JetEResbx0_u.GetYaxis().SetTitle("a.u.")
     JetEResbx0_u.SetStats(False)
     JetEResbx0_u.SetMaximum(1e2)
