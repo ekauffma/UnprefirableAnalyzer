@@ -39,7 +39,7 @@ def main(file_path, out_dir):
     legend.Draw()
 
     c.Draw()
-    c.SaveAs(f"{outdir}/njet_bx.png")
+    c.SaveAs(f"{out_dir}/njet_bx.png")
     c.Close()
     
     
@@ -95,7 +95,7 @@ def main(file_path, out_dir):
     c.SetGrid()
     c.SetLogy()
     c.Draw()
-    c.SaveAs(f"{outdir}/jetpt_unprefirable.png")
+    c.SaveAs(f"{out_dir}/jetpt_unprefirable.png")
     c.Close()
     
     # FIRSTBUNCHINTRAIN
@@ -145,7 +145,7 @@ def main(file_path, out_dir):
     c.SetGrid()
     c.SetLogy()
     c.Draw()
-    c.SaveAs(f"{outdir}/jetpt_firstbunch.png")
+    c.SaveAs(f"{out_dir}/jetpt_firstbunch.png")
     c.Close()
     
     # ratio
@@ -188,7 +188,7 @@ def main(file_path, out_dir):
     legend.Draw()
 
     c_et_rat.Draw()
-    c_et_rat.SaveAs(f"{outdir}/jetpt_ratio.png")
+    c_et_rat.SaveAs(f"{out_dir}/jetpt_ratio.png")
     c_et_rat.Close()
     
     
@@ -243,7 +243,7 @@ def main(file_path, out_dir):
     c1.SetGrid()
     c1.SetLogy()
     c1.Draw()
-    c1.SaveAs(f"{outdir}/jeteta_unprefirable.png")
+    c1.SaveAs(f"{out_dir}/jeteta_unprefirable.png")
     c1.Close()
 
     # FIRSTBUNCHINTRAIN
@@ -293,7 +293,7 @@ def main(file_path, out_dir):
     c.SetGrid()
     c.SetLogy()
     c.Draw()
-    c.SaveAs(f"{outdir}/jeteta_firstbunchintrain.png")
+    c.SaveAs(f"{out_dir}/jeteta_firstbunchintrain.png")
     c.Close()
     
     # RATIO
@@ -336,7 +336,7 @@ def main(file_path, out_dir):
     legend.Draw()
 
     c_eta_rat.Draw()
-    c_eta_rat.SaveAs(f"{outdir}/jeteta_ratio.png")
+    c_eta_rat.SaveAs(f"{out_dir}/jeteta_ratio.png")
     c_eta_rat.Close()
     
     
@@ -353,7 +353,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_0_u.Draw()
-    c_ep_0_u.SaveAs(f"{outdir}/jetetaphi_bx0_offline_unprefirable.png")
+    c_ep_0_u.SaveAs(f"{out_dir}/jetetaphi_bx0_offline_unprefirable.png")
     c_ep_0_u.Close()
 
     c_ep_m1_u = ROOT.TCanvas( 'c_ep_m1_u', 'c_ep_m1_u', 100, 10, 600, 600 )
@@ -364,7 +364,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_m1_u.Draw()
-    c_ep_m1_u.SaveAs(f"{outdir}/jetetaphi_bxm1_offline_unprefirable.png")
+    c_ep_m1_u.SaveAs(f"{out_dir}/jetetaphi_bxm1_offline_unprefirable.png")
     c_ep_m1_u.Close()
 
     c_ep_0_u_on = ROOT.TCanvas( 'c_ep_0_u_on', 'c_ep_0_u_on', 100, 10, 600, 600 )
@@ -375,7 +375,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_0_u_on.Draw()
-    c_ep_0_u_on.SaveAs(f"{outdir}/jetetaphi_bx0_online_unprefirable.png")
+    c_ep_0_u_on.SaveAs(f"{out_dir}/jetetaphi_bx0_online_unprefirable.png")
     c_ep_0_u_on.Close()
 
     c_ep_m1_u_on = ROOT.TCanvas( 'c_ep_m1_u_on', 'c_ep_m1_u_on', 100, 10, 600, 600 )
@@ -386,7 +386,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_m1_u_on.Draw()
-    c_ep_m1_u_on.SaveAs(f"{outdir}/jetetaphi_bxm1_online_unprefirable.png")
+    c_ep_m1_u_on.SaveAs(f"{out_dir}/jetetaphi_bxm1_online_unprefirable.png")
     c_ep_m1_u_on.Close()
     
     # FIRSTBUNCHINTRAIN
@@ -398,7 +398,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_0_f.Draw()
-    c_ep_0_f.SaveAs(f"{outdir}/jetetaphi_bx0_offline_firstbunch.png")
+    c_ep_0_f.SaveAs(f"{out_dir}/jetetaphi_bx0_offline_firstbunch.png")
     c_ep_0_f.Close()
 
     c_ep_m1_f = ROOT.TCanvas( 'c_ep_m1_f', 'c_ep_m1_f', 100, 10, 600, 600 )
@@ -409,7 +409,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_m1_f.Draw()
-    c_ep_m1_f.SaveAs(f"{outdir}/jetetaphi_bxm1_offline_firstbunch.png")
+    c_ep_m1_f.SaveAs(f"{out_dir}/jetetaphi_bxm1_offline_firstbunch.png")
     c_ep_m1_f.Close()
 
     c_ep_0_f_on = ROOT.TCanvas( 'c_ep_0_f_on', 'c_ep_0_f_on', 100, 10, 600, 600 )
@@ -420,7 +420,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_0_f_on.Draw()
-    c_ep_0_f_on.SaveAs(f"{outdir}/jetetaphi_bx0_online_firstbunch.png")
+    c_ep_0_f_on.SaveAs(f"{out_dir}/jetetaphi_bx0_online_firstbunch.png")
     c_ep_0_f_on.Close()
 
     c_ep_m1_f_on = ROOT.TCanvas( 'c_ep_m1_f_on', 'c_ep_m1_f_on', 100, 10, 600, 600 )
@@ -431,7 +431,7 @@ def main(file_path, out_dir):
     EtaPhi.SetStats(False)
     EtaPhi.Draw("colz")
     c_ep_m1_f_on.Draw()
-    c_ep_m1_f_on.SaveAs(f"{outdir}/jetetaphi_bxm1_online_firstbunch.png")
+    c_ep_m1_f_on.SaveAs(f"{out_dir}/jetetaphi_bxm1_online_firstbunch.png")
     c_ep_m1_f_on.Close()
     
     
@@ -492,7 +492,7 @@ def main(file_path, out_dir):
 
     c1.SetLogy()
     c1.Draw()
-    c1.SaveAs(f"{outdir}/jetptres_unprefirable.png")
+    c1.SaveAs(f"{out_dir}/jetptres_unprefirable.png")
     c1.Close()
 
     # firstbunchintrain
@@ -548,7 +548,7 @@ def main(file_path, out_dir):
 
     c2.SetLogy()
     c2.Draw()
-    c2.SaveAs(f"{outdir}/jetptres_firstbunch.png")
+    c2.SaveAs(f"{out_dir}/jetptres_firstbunch.png")
     c2.Close()
     
     
