@@ -82,6 +82,10 @@ private:
   edm::EDGetTokenT<vector<pat::Muon>> slimmedMuonsToken_; // needed for HLT_IsoMu20
   edm::EDGetTokenT<edm::TriggerResults> trgresultsORIGToken_; // need to require HLT_IsoMu20 in order to match reco jets
 
+  unsigned int Run;
+  unsigned int Event;
+  unsigned int lumi;
+
   bool Flag_IsUnprefirable;
   bool Flag_FirstBunchInTrain;
 
@@ -96,6 +100,8 @@ private:
   TH2F *onlineJetsDisplay_bx0;
   TH2F *onlineJetsDisplay_bxm1;
   TH2F *onlineJetsDisplay_bx0_bxm1;
+
+  TTree *searchForEvent;
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   edm::ESGetToken<SetupData, SetupRecord> setupToken_;
@@ -126,6 +132,8 @@ PrefiringEventDisplay::PrefiringEventDisplay(const edm::ParameterSet& iConfig):
   onlineJetsDisplay_bx0 = fs->make<TH2F>("onlineJetsDisplay_bx0","Event Display",(34*5), -1.4841, 1.4841, (72*5), -3.142, 3.142);
   onlineJetsDisplay_bxm1 = fs->make<TH2F>("onlineJetsDisplay_bxm1","Event Display",(34*5), -1.4841, 1.4841, (72*5), -3.142, 3.142);
   onlineJetsDisplay_bx0_bxm1 = fs->make<TH2F>("onlineJetsDisplay_bx0_bxm1","Event Display",(34*5), -1.4841, 1.4841, (72*5), -3.142, 3.142);
+
+  searchForEvent = fs->make<TTree>("searchForEvent","searchForEvent");
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   setupDataToken_ = esConsumes<SetupData, SetupRecord>();
@@ -239,8 +247,12 @@ void PrefiringEventDisplay::analyze(const edm::Event& iEvent, const edm::EventSe
 
     cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
 
+    Event = iEvent.id().event();
+
     // iterate through reco jets
     for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
+
+      if (Event!=1687892580) continue;
 
       // check for match in bx0
       vector<float> matchInfo_bx0 = checkMatchBX((*slimmedJets)[i], jets, 0);
@@ -248,19 +260,29 @@ void PrefiringEventDisplay::analyze(const edm::Event& iEvent, const edm::EventSe
       vector<float> matchInfo_bxm1 = checkMatchBX((*slimmedJets)[i], jets, -1);
 
       if(matchInfo_bx0.at(0)==1.0 && matchInfo_bxm1.at(0)==1.0){
-        cout<<"matched to 0 and -1"<<endl;
+        cout<<"    matched to 0 and -1"<<endl;
+        cout<<"      offline eta = "<<(*slimmedJets)[i].eta()<<", phi = "<<(*slimmedJets)[i].phi()<<", pt = "<<(*slimmedJets)[i].pt()<<endl;
+        cout<<"      online eta = "<<matchInfo_bx0.at(2)<<", phi = "<<matchInfo_bx0.at(3)<<", pt = "<<matchInfo_bx0.at(1)<<endl;
         offlineJetsDisplay_bx0_bxm1->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi(), (*slimmedJets)[i].pt());
-        onlineJetsDisplay_bx0_bxm1->Fill(matchInfo_bx0.at(1), matchInfo_bx0.at(2), matchInfo_bx0.at(3));
+        onlineJetsDisplay_bx0_bxm1->Fill(matchInfo_bx0.at(2), matchInfo_bx0.at(3), matchInfo_bx0.at(1));
       }
       if(matchInfo_bx0.at(0)==1.0 && matchInfo_bxm1.at(0)==0.0){
-        cout<<"matched to 0, not -1"<<endl;
+        cout<<"    matched to 0, not -1"<<endl;
+        cout<<"      offline eta = "<<(*slimmedJets)[i].eta()<<", phi = "<<(*slimmedJets)[i].phi()<<", pt = "<<(*slimmedJets)[i].pt()<<endl;
+        cout<<"      online eta = "<<matchInfo_bx0.at(2)<<", phi = "<<matchInfo_bx0.at(3)<<", pt = "<<matchInfo_bx0.at(1)<<endl;
         offlineJetsDisplay_bx0->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi(), (*slimmedJets)[i].pt());
-        onlineJetsDisplay_bx0->Fill(matchInfo_bx0.at(1), matchInfo_bx0.at(2), matchInfo_bx0.at(3));
+        onlineJetsDisplay_bx0->Fill(matchInfo_bx0.at(2), matchInfo_bx0.at(3), matchInfo_bx0.at(1));
       }
       if(matchInfo_bx0.at(0)==0.0 && matchInfo_bxm1.at(0)==1.0){
-        cout<<"matched to -1, not 0"<<endl;
+        cout<<"    matched to -1, not 0"<<endl;
+        cout<<"      offline eta = "<<(*slimmedJets)[i].eta()<<", phi = "<<(*slimmedJets)[i].phi()<<", pt = "<<(*slimmedJets)[i].pt()<<endl;
+        cout<<"      online eta = "<<matchInfo_bxm1.at(2)<<", phi = "<<matchInfo_bxm1.at(3)<<", pt = "<<matchInfo_bxm1.at(1)<<endl;
         offlineJetsDisplay_bxm1->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi(), (*slimmedJets)[i].pt());
-        onlineJetsDisplay_bxm1->Fill(matchInfo_bxm1.at(1), matchInfo_bxm1.at(2), matchInfo_bxm1.at(3));
+        onlineJetsDisplay_bxm1->Fill(matchInfo_bxm1.at(2), matchInfo_bxm1.at(3), matchInfo_bxm1.at(1));
+        Run   = iEvent.id().run();
+        Event = iEvent.id().event();
+        lumi  = iEvent.luminosityBlock();
+        searchForEvent->Fill();
       }
     }
   }
@@ -276,6 +298,9 @@ void PrefiringEventDisplay::analyze(const edm::Event& iEvent, const edm::EventSe
 // ------------ method called once each job just before starting event loop  ------------
 void PrefiringEventDisplay::beginJob() {
   // please remove this method if not needed
+  searchForEvent->Branch("event_runNo",  &Run,   "event_runNo/I");
+  searchForEvent->Branch("event_evtNo",  &Event, "event_evtNo/I");
+  searchForEvent->Branch("event_lumi",   &lumi,  "event_lumi/I");
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
