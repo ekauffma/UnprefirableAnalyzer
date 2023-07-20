@@ -81,8 +81,8 @@ private:
   edm::EDGetTokenT< BXVector<GlobalAlgBlk> > gtAlgBlkToken;
   edm::Handle< BXVector<GlobalAlgBlk> > gtAlgBlkHandle;
   edm::EDGetTokenT<vector<pat::Jet>> slimmedJetsToken_; // reco jets to match to l1 jets
-  edm::EDGetTokenT<vector<pat::Muon>> slimmedMuonsToken_; // needed for HLT_IsoMu20
-  edm::EDGetTokenT<edm::TriggerResults> trgresultsORIGToken_; // need to require HLT_IsoMu20 in order to match reco jets
+  edm::EDGetTokenT<vector<pat::Muon>> slimmedMuonsToken_; // needed for HLT_IsoMu24
+  edm::EDGetTokenT<edm::TriggerResults> trgresultsORIGToken_; // need to require HLT_IsoMu24 in order to match reco jets
 
   bool Flag_IsUnprefirable;
   bool Flag_FirstBunchInTrain;
@@ -326,8 +326,8 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
   iEvent.getByToken(slimmedMuonsToken_,slimmedMuons );
 
 
-  //get HLT_IsoMu20 result
-  bool passHLT_IsoMu20(false); 
+  //get HLT_IsoMu24 result
+  bool passHLT_IsoMu24(false); 
   edm::Handle<edm::TriggerResults> trigResults;
   iEvent.getByToken(trgresultsORIGToken_, trigResults);
   if( !trigResults.failedToGet() ) {
@@ -336,12 +336,12 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     for( int i_Trig = 0; i_Trig < N_Triggers; ++i_Trig ) {
       if (trigResults.product()->accept(i_Trig)) {
         TString TrigPath =trigName.triggerName(i_Trig);
-        if(TrigPath.Index("HLT_IsoMu20_v") >=0) passHLT_IsoMu20=true; 
+        if(TrigPath.Index("HLT_IsoMu24_v") >=0) passHLT_IsoMu24=true; 
       }
     }
   }
 
-  if(passHLT_IsoMu20) cout<<"Event #"<<iEvent.id().event()<<", passHLT_IsoMu20 = "<<passHLT_IsoMu20<<endl;
+  if(passHLT_IsoMu24) cout<<"Event #"<<iEvent.id().event()<<", passHLT_IsoMu24 = "<<passHLT_IsoMu24<<endl;
  
   auto menuRcd = iSetup.get<L1TUtmTriggerMenuRcd>();
   l1GtMenu = &menuRcd.get(L1TUtmTriggerMenuEventToken);
@@ -364,7 +364,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     }
   }
 
-  if(Flag_FirstBunchInTrain  && passHLT_IsoMu20){
+  if(Flag_FirstBunchInTrain  && passHLT_IsoMu24){
     
     cout<<"    Flag_FirstBunchInTrain = "<<Flag_FirstBunchInTrain<<endl;
 
@@ -403,17 +403,17 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
   }
 
   // for checking which events pass which flag 
-  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_IsoMu20 ) h_nevt->Fill(0);
-  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_IsoMu20 ) h_nevt->Fill(1);
-  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_IsoMu20 ) h_nevt->Fill(2); 
-  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_IsoMu20 ) h_nevt->Fill(3);
-  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_IsoMu20 ) h_nevt->Fill(4);
-  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_IsoMu20 ) h_nevt->Fill(5);
-  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_IsoMu20 ) h_nevt->Fill(6);
-  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_IsoMu20 ) h_nevt->Fill(7);
+  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_IsoMu24 ) h_nevt->Fill(0);
+  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_IsoMu24 ) h_nevt->Fill(1);
+  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_IsoMu24 ) h_nevt->Fill(2); 
+  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_IsoMu24 ) h_nevt->Fill(3);
+  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_IsoMu24 ) h_nevt->Fill(4);
+  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_IsoMu24 ) h_nevt->Fill(5);
+  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_IsoMu24 ) h_nevt->Fill(6);
+  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_IsoMu24 ) h_nevt->Fill(7);
 
 
-  if(Flag_IsUnprefirable && passHLT_IsoMu20){
+  if(Flag_IsUnprefirable && passHLT_IsoMu24){
 
     cout<<"    isUnprefirable = "<<Flag_IsUnprefirable<<endl;
 
