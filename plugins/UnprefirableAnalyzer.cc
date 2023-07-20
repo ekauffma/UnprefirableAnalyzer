@@ -287,33 +287,32 @@ template <typename RecoJet, typename L1JetCollection>
 bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection, int bx, 
                   TH1I* nbx, TH1F* h_jetet, TH1F* h_jeteta, TH2F* h_jetetaphi, TH2F* h_jetetaphi_on, TH1F* h_jeteres) {
 
-  float minDeltaR = 999.0;
+  bool match = false;
+  float temp = 99.0;
   float matchedPt = 0.0;
   float matchedEta = 0.0;
   float matchedPhi = 0.0;
 
   for (auto it = l1jetcollection.begin(bx); it!=l1jetcollection.end(bx); it++){
-    // check if deltaR value is smallest so far (finds best match if there is one)
-    float currentDeltaR = deltaR(it, recojet);
-    if(currentDeltaR<minDeltaR && recojet.pt()>30) {
-      minDeltaR = currentDeltaR;
+    // check if deltaR is lower than temp
+    if((deltaR(it, recojet)<temp) && (recojet.pt()>30)) {
+      temp = deltaR(it, recojet);
       matchedPt = it->pt();
       matchedEta = it->eta();
       matchedPhi = it->phi();
     }
+    if(temp < 0.4) {
+      match = true;
+      nbx->Fill(bx);
+      h_jetet->Fill(recojet.pt());
+      h_jeteta->Fill(recojet.eta());
+      h_jetetaphi->Fill(recojet.eta(), recojet.phi());
+      h_jetetaphi_on->Fill(matchedEta,matchedPhi);
+      h_jeteres->Fill(matchedPt/recojet.pt());
+      break;
+    }
   }
-
-  if(minDeltaR < 0.4){
-    nbx->Fill(bx);
-    h_jetet->Fill(recojet.pt());
-    h_jetetaphi->Fill(recojet.eta(), recojet.phi());
-    h_jetetaphi_on->Fill(matchedEta, matchedPhi);
-    h_jeteres->Fill(matchedPt/recojet.pt());
-
-    return true; // true = match found
-  }
-
-  return false; // no match found
+  return match;
 }
 
 // ------------ method called for each event  ------------

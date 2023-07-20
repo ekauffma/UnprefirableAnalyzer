@@ -2,7 +2,7 @@ import sys
 from CRABClient.UserUtilities import config
 config = config()
 
-config.General.requestName = 'Muon1_2023C_manyruns_recoInfo_v4'
+config.General.requestName = 'Muon1_2023C_manyruns_bestmatch'
 config.General.transferOutputs = True
 config.General.transferLogs = True
 
@@ -17,3 +17,4 @@ config.Data.splitting = 'FileBased'
 config.Data.outLFNDirBase = '/store/group/dpg_trigger/comm_trigger/L1Trigger/ekauffma'
 
 config.Site.storageSite = 'T2_CH_CERN'
+config.Site.blacklist = ['T2_US_MIT'] # jobs are failing here often, so blacklisting
