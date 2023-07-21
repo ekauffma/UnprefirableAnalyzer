@@ -21,7 +21,7 @@ def main(file_path, out_dir):
     nJets_bx_unprefirable.GetXaxis().SetTitle("BX")
     nJets_bx_unprefirable.GetYaxis().SetTitle("Number of Jets")
     nJets_bx_unprefirable.SetStats(False)
-    nJets_bx_unprefirable.SetMaximum(2000)
+    nJets_bx_unprefirable.SetMaximum(1e6)
     nJets_bx_unprefirable.Draw("E")
 
     nJets_bx_firstbunch = inFile.Get("demo/nJets_bx_firstbunch")
@@ -38,6 +38,7 @@ def main(file_path, out_dir):
     legend.SetTextSize(0.04)
     legend.Draw()
 
+    c.SetLogy()
     c.Draw()
     c.SaveAs(f"{out_dir}/njet_bx.png")
     c.Close()
@@ -57,7 +58,7 @@ def main(file_path, out_dir):
     JetEtbx0_u.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
     JetEtbx0_u.GetYaxis().SetTitle("a.u.")
     JetEtbx0_u.SetStats(False)
-    JetEtbx0_u.SetMaximum(1e3)
+    JetEtbx0_u.SetMaximum(1e7)
     JetEtbx0_u.SetMinimum(1e-1)
     JetEtbx0_u.Draw("E")
 
@@ -108,7 +109,7 @@ def main(file_path, out_dir):
     JetEtbx0_f.SetLineColor(2)
     JetEtbx0_f.SetMarkerColor(2)
     JetEtbx0_f.SetMarkerStyle(47)
-    JetEtbx0_f.SetMaximum(1e4)
+    JetEtbx0_f.SetMaximum(1e7)
     JetEtbx0_f.SetMinimum(1e-1)
     JetEtbx0_f.Draw("E")
 
@@ -155,6 +156,8 @@ def main(file_path, out_dir):
     JetEt_bx0_bxm1_u = inFile.Get("demo/JetEt_bx0_bxm1_unprefirable")
 
     JetEt_ratio_u = JetEt_bxm1_u.Clone()
+    JetEt_ratio_u.Sumw2()
+    JetEt_bx0_bxm1_u.Sumw2()
     JetEt_ratio_u.Divide(JetEt_bx0_bxm1_u)
 
     JetEt_ratio_u.SetLineColor(50)
@@ -165,13 +168,16 @@ def main(file_path, out_dir):
     JetEt_ratio_u.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
     JetEt_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEt_ratio_u.SetMinimum(0)
-    JetEt_ratio_u.SetMaximum(0.6)
+    JetEt_ratio_u.SetMaximum(0.25)
     JetEt_ratio_u.Draw("E")
 
     JetEt_bxm1_f = inFile.Get("demo/JetEt_bxm1_firstbunch")
     JetEt_bx0_bxm1_f = inFile.Get("demo/JetEt_bx0_bxm1_firstbunch")
 
     JetEt_ratio_f = JetEt_bxm1_f.Clone()
+    
+    JetEt_ratio_f.Sumw2()
+    JetEt_bx0_bxm1_f.Sumw2()
     JetEt_ratio_f.Divide(JetEt_bx0_bxm1_f)
 
     JetEt_ratio_f.SetLineColor(9)
@@ -206,7 +212,7 @@ def main(file_path, out_dir):
     JetEtabx0_u.GetXaxis().SetTitle("Reco Jet #eta (GeV)")
     JetEtabx0_u.GetYaxis().SetTitle("a.u.")
     JetEtabx0_u.SetStats(False)
-    JetEtabx0_u.SetMaximum(1e3)
+    JetEtabx0_u.SetMaximum(1e7)
     JetEtabx0_u.SetMinimum(1e-1)
     JetEtabx0_u.Draw("E")
 
@@ -231,7 +237,7 @@ def main(file_path, out_dir):
     JetEta_bxm2_u.SetMarkerStyle(24)
     JetEta_bxm2_u.Draw("E same")
 
-    legend = ROOT.TLegend(0.35,0.7,0.7,0.88)
+    legend = ROOT.TLegend(0.35,0.75,0.7,0.89)
     legend.AddEntry(JetEtabx0_u,"BX=0","PE")
     legend.AddEntry(JetEtabxm1_u,"BX=-1","PE")
     legend.AddEntry(JetEta_bx0_bxm1_u,"BX=0 or BX=-1","PE")
@@ -256,7 +262,7 @@ def main(file_path, out_dir):
     JetEtabx0_f.SetLineColor(2)
     JetEtabx0_f.SetMarkerColor(2)
     JetEtabx0_f.SetMarkerStyle(47)
-    JetEtabx0_f.SetMaximum(5e4)
+    JetEtabx0_f.SetMaximum(1e7)
     JetEtabx0_f.SetMinimum(1e-1)
     JetEtabx0_f.Draw("E")
 
@@ -281,7 +287,7 @@ def main(file_path, out_dir):
     JetEta_bxm2_f.SetMarkerStyle(24)
     JetEta_bxm2_f.Draw("E same")
 
-    legend2 = ROOT.TLegend(0.3,0.7,0.7,0.85)
+    legend2 = ROOT.TLegend(0.35,0.75,0.7,0.89)
     legend2.AddEntry(JetEtabx0_f,"BX=0","PE")
     legend2.AddEntry(JetEtabxm1_f,"BX=-1","PE")
     legend2.AddEntry(JetEta_bx0_bxm1_f,"BX=0 or BX=-1","PE")
@@ -303,6 +309,9 @@ def main(file_path, out_dir):
     JetEta_bx0_bxm1_u = inFile.Get("demo/JetEta_bx0_bxm1_unprefirable")
 
     JetEta_ratio_u = JetEta_bxm1_u.Clone()
+    
+    JetEta_ratio_u.Sumw2()
+    JetEta_bx0_bxm1_u.Sumw2()
     JetEta_ratio_u.Divide(JetEta_bx0_bxm1_u)
 
     JetEta_ratio_u.SetLineColor(50)
@@ -313,13 +322,15 @@ def main(file_path, out_dir):
     JetEta_ratio_u.GetXaxis().SetTitle("Reco Jet #eta (GeV)")
     JetEta_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEta_ratio_u.SetMinimum(0)
-    JetEta_ratio_u.SetMaximum(0.6)
+    JetEta_ratio_u.SetMaximum(0.25)
     JetEta_ratio_u.Draw("E")
 
     JetEta_bxm1_f = inFile.Get("demo/JetEta_bxm1_firstbunch")
     JetEta_bx0_bxm1_f = inFile.Get("demo/JetEta_bx0_bxm1_firstbunch")
 
     JetEta_ratio_f = JetEta_bxm1_f.Clone()
+    JetEta_ratio_f.Sumw2()
+    JetEta_bx0_bxm1_f.Sumw2()
     JetEta_ratio_f.Divide(JetEta_bx0_bxm1_f)
 
     JetEta_ratio_f.SetLineColor(9)
@@ -449,7 +460,7 @@ def main(file_path, out_dir):
     JetEResbx0_u.GetXaxis().SetTitle("Online Jet p_{T} / Offline Jet p_{T}")
     JetEResbx0_u.GetYaxis().SetTitle("a.u.")
     JetEResbx0_u.SetStats(False)
-    JetEResbx0_u.SetMaximum(1e2)
+    JetEResbx0_u.SetMaximum(1e7)
     JetEResbx0_u.Draw("E")
 
     JetEResbxm1_u = inFile.Get("demo/JetERes_bxm1_unprefirable")
@@ -505,7 +516,7 @@ def main(file_path, out_dir):
     JetEResbx0_f.GetXaxis().SetTitle("Offline Jet p_{T} / Online Jet p_{T}")
     JetEResbx0_f.GetYaxis().SetTitle("a.u.")
     JetEResbx0_f.SetStats(False)
-    JetEResbx0_f.SetMaximum(5e3)
+    JetEResbx0_f.SetMaximum(1e7)
     JetEResbx0_f.Draw("E")
 
     JetEResbxm1_f = inFile.Get("demo/JetERes_bxm1_firstbunch")
