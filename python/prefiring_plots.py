@@ -21,7 +21,8 @@ def main(file_path, out_dir):
     nJets_bx_unprefirable.GetXaxis().SetTitle("BX")
     nJets_bx_unprefirable.GetYaxis().SetTitle("Number of Jets")
     nJets_bx_unprefirable.SetStats(False)
-    nJets_bx_unprefirable.SetMaximum(1e6)
+    nJets_bx_unprefirable.SetMaximum(1e8)
+    nJets_bx_unprefirable.SetMinimum(1e1)
     nJets_bx_unprefirable.Draw("E")
 
     nJets_bx_firstbunch = inFile.Get("demo/nJets_bx_firstbunch")
@@ -150,7 +151,7 @@ def main(file_path, out_dir):
     c.Close()
     
     # ratio
-    c_et_rat = ROOT.TCanvas( 'c_et_rat', 'c_et_rat', 100, 10, 600, 600 )
+    c_et_rat = ROOT.TCanvas( 'c_et_rat', 'c_et_rat', 10, 10, 800, 600 )
 
     JetEt_bxm1_u = inFile.Get("demo/JetEt_bxm1_unprefirable")
     JetEt_bx0_bxm1_u = inFile.Get("demo/JetEt_bx0_bxm1_unprefirable")
@@ -196,7 +197,92 @@ def main(file_path, out_dir):
     c_et_rat.Draw()
     c_et_rat.SaveAs(f"{out_dir}/jetpt_ratio.png")
     c_et_rat.Close()
-    
+   
+    # low resolution plot (unprefirable)
+    c = ROOT.TCanvas( 'c', 'c', 100, 10, 600, 600 )
+    JetEtbx0_u = inFile.Get("demo/JetPt_lowres_bx0_unprefirable")
+    JetEtbx0_u.SetTitle("Jet E_{T} Distribution for Low Resolution (<0.5) Jets - Unprefirable")
+    JetEtbx0_u.SetLineColor(2)
+    JetEtbx0_u.SetMarkerColor(2)
+    JetEtbx0_u.SetMarkerStyle(47)
+    JetEtbx0_u.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
+    JetEtbx0_u.GetYaxis().SetTitle("a.u.")
+    JetEtbx0_u.SetStats(False)
+    JetEtbx0_u.SetMaximum(1e6)
+    JetEtbx0_u.SetMinimum(1e-1)
+    JetEtbx0_u.Draw("E")
+
+    JetEtbxm1_u = inFile.Get("demo/JetPt_lowres_bxm1_unprefirable")
+    JetEtbxm1_u.SetStats(False)
+    JetEtbxm1_u.SetLineColor(55)
+    JetEtbxm1_u.SetMarkerColor(55)
+    JetEtbxm1_u.SetMarkerStyle(22)
+    JetEtbxm1_u.Draw("E same")
+
+    JetEt_bxm2_u = inFile.Get("demo/JetPt_lowres_bxm2_unprefirable")
+    JetEt_bxm2_u.SetStats(False)
+    JetEt_bxm2_u.SetLineColor(6)
+    JetEt_bxm2_u.SetMarkerColor(6)
+    JetEt_bxm2_u.SetMarkerStyle(24)
+    JetEt_bxm2_u.Draw("E same")
+
+
+    legend = ROOT.TLegend(0.5,0.7,0.9,0.85)
+    legend.AddEntry(JetEtbx0_u,"BX=0","PE")
+    legend.AddEntry(JetEtbxm1_u,"BX=-1","PE")
+    legend.AddEntry(JetEt_bxm2_u,"BX=-2","PE")
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.04)
+    legend.Draw()
+
+    c.SetGrid()
+    c.SetLogy()
+    c.Draw()
+    c.SaveAs(f"{out_dir}/jetpt_lowres_unprefirable.png")
+    c.Close()
+
+    # low resolution plot (firstbunch)
+    c = ROOT.TCanvas( 'c', 'c', 100, 10, 600, 600 )
+    JetEtbx0_f = inFile.Get("demo/JetPt_lowres_bx0_firstbunch")
+    JetEtbx0_f.SetTitle("Jet E_{T} Distribution for Low Resolution (<0.5) Jets - FirstBunchInTrain")
+    JetEtbx0_f.SetLineColor(2)
+    JetEtbx0_f.SetMarkerColor(2)
+    JetEtbx0_f.SetMarkerStyle(47)
+    JetEtbx0_f.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
+    JetEtbx0_f.GetYaxis().SetTitle("a.u.")
+    JetEtbx0_f.SetStats(False)
+    JetEtbx0_f.SetMaximum(1e6)
+    JetEtbx0_f.SetMinimum(1e-1)
+    JetEtbx0_f.Draw("E")
+
+    JetEtbxm1_f = inFile.Get("demo/JetPt_lowres_bxm1_firstbunch")
+    JetEtbxm1_f.SetStats(False)
+    JetEtbxm1_f.SetLineColor(55)
+    JetEtbxm1_f.SetMarkerColor(55)
+    JetEtbxm1_f.SetMarkerStyle(22)
+    JetEtbxm1_f.Draw("E same")
+
+    JetEt_bxm2_f = inFile.Get("demo/JetPt_lowres_bxm2_firstbunch")
+    JetEt_bxm2_f.SetStats(False)
+    JetEt_bxm2_f.SetLineColor(6)
+    JetEt_bxm2_f.SetMarkerColor(6)
+    JetEt_bxm2_f.SetMarkerStyle(24)
+    JetEt_bxm2_f.Draw("E same")
+
+
+    legend = ROOT.TLegend(0.5,0.7,0.9,0.85)
+    legend.AddEntry(JetEtbx0_f,"BX=0","PE")
+    legend.AddEntry(JetEtbxm1_f,"BX=-1","PE")
+    legend.AddEntry(JetEt_bxm2_f,"BX=-2","PE")
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.04)
+    legend.Draw()
+
+    c.SetGrid()
+    c.SetLogy()
+    c.Draw()
+    c.SaveAs(f"{out_dir}/jetpt_lowres_firstbunch.png")
+    c.Close() 
     
     #############################################################################
     ############################### jet eta plots ###############################
@@ -303,7 +389,7 @@ def main(file_path, out_dir):
     c.Close()
     
     # RATIO
-    c_eta_rat = ROOT.TCanvas( 'c_eta_rat', 'c_eta_rat', 100, 10, 600, 600 )
+    c_eta_rat = ROOT.TCanvas( 'c_eta_rat', 'c_eta_rat', 10, 10, 800, 600 )
 
     JetEta_bxm1_u = inFile.Get("demo/JetEta_bxm1_unprefirable")
     JetEta_bx0_bxm1_u = inFile.Get("demo/JetEta_bx0_bxm1_unprefirable")
@@ -349,8 +435,143 @@ def main(file_path, out_dir):
     c_eta_rat.Draw()
     c_eta_rat.SaveAs(f"{out_dir}/jeteta_ratio.png")
     c_eta_rat.Close()
-    
-    
+   
+    # UNPREFIRABLE RATIO SEPARATED PT
+    c_eta_rat_u = ROOT.TCanvas( 'c_eta_rat_u', 'c_eta_rat_u', 10, 10, 800, 600 )
+
+    JetEta_low_bxm1_u = inFile.Get("demo/JetEta_lowpt_bxm1_unprefirable")
+    JetEta_low_bx0_bxm1_u = inFile.Get("demo/JetEta_lowpt_bx0_bxm1_unprefirable")
+
+    JetEta_low_ratio_u = JetEta_low_bxm1_u.Clone()
+
+    JetEta_low_ratio_u.Sumw2()
+    JetEta_low_bx0_bxm1_u.Sumw2()
+    JetEta_low_ratio_u.Divide(JetEta_low_bx0_bxm1_u)
+
+    JetEta_low_ratio_u.SetLineColor(50)
+    JetEta_low_ratio_u.SetMarkerColor(50)
+    JetEta_low_ratio_u.SetMarkerStyle(8)
+    JetEta_low_ratio_u.SetMarkerSize(0.5)
+    JetEta_low_ratio_u.SetTitle("Unprefirable")
+    JetEta_low_ratio_u.GetXaxis().SetTitle("Reco Jet #eta (GeV)")
+    JetEta_low_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
+    JetEta_low_ratio_u.SetMinimum(0)
+    JetEta_low_ratio_u.SetMaximum(0.5)
+    JetEta_low_ratio_u.SetStats(False)
+    JetEta_low_ratio_u.Draw("E")
+
+    JetEta_med_bxm1_u = inFile.Get("demo/JetEta_medpt_bxm1_unprefirable")
+    JetEta_med_bx0_bxm1_u = inFile.Get("demo/JetEta_medpt_bx0_bxm1_unprefirable")
+
+    JetEta_med_ratio_u = JetEta_med_bxm1_u.Clone()
+
+    JetEta_med_ratio_u.Sumw2()
+    JetEta_med_bx0_bxm1_u.Sumw2()
+    JetEta_med_ratio_u.Divide(JetEta_med_bx0_bxm1_u)
+
+    JetEta_med_ratio_u.SetLineColor(54)
+    JetEta_med_ratio_u.SetMarkerColor(54)
+    JetEta_med_ratio_u.SetMarkerStyle(29)
+    JetEta_med_ratio_u.SetMarkerSize(0.5)
+    JetEta_med_ratio_u.SetStats(False);
+    JetEta_med_ratio_u.Draw("E same")
+
+    JetEta_high_bxm1_u = inFile.Get("demo/JetEta_high_bxm1_unprefirable")
+    JetEta_high_bx0_bxm1_u = inFile.Get("demo/JetEta_high_bx0_bxm1_unprefirable")
+
+    JetEta_high_ratio_u = JetEta_high_bxm1_u.Clone()
+
+    JetEta_high_ratio_u.Sumw2()
+    JetEta_high_bx0_bxm1_u.Sumw2()
+    JetEta_high_ratio_u.Divide(JetEta_high_bx0_bxm1_u)
+
+    JetEta_high_ratio_u.SetLineColor(108)
+    JetEta_high_ratio_u.SetMarkerColor(108)
+    JetEta_high_ratio_u.SetMarkerStyle(21)
+    JetEta_high_ratio_u.SetMarkerSize(0.5)
+    JetEta_high_ratio_u.SetStats(False);
+    JetEta_high_ratio_u.Draw("E same")
+
+    legend = ROOT.TLegend(0.3,0.75,0.9,0.88)
+    legend.AddEntry(JetEta_low_ratio_u,"L1 p_T <= 15 GeV","L")
+    legend.AddEntry(JetEta_med_ratio_u,"15 GeV < L1 p_T <= 30 GeV","L")
+    legend.AddEntry(JetEta_high_ratio_u,"L1 p_T > 30 GeV","L")
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.04)
+    legend.Draw()
+
+    c_eta_rat_u.Draw()
+    c_eta_rat_u.SaveAs(f"{out_dir}/jeteta_ratio_ptsep_unprefirable.png")
+    c_eta_rat_u.Close() 
+   
+    # FIRSTBUNCHINTRAIN RATIO SEPARATED PT
+    c_eta_rat_f = ROOT.TCanvas( 'c_eta_rat_f', 'c_eta_rat_f', 10, 10, 800, 600 )
+
+    JetEta_low_bxm1_f = inFile.Get("demo/JetEta_lowpt_bxm1_firstbunch")
+    JetEta_low_bx0_bxm1_f = inFile.Get("demo/JetEta_lowpt_bx0_bxm1_firstbunch")
+
+    JetEta_low_ratio_f = JetEta_low_bxm1_f.Clone()
+
+    JetEta_low_ratio_f.Sumw2()
+    JetEta_low_bx0_bxm1_f.Sumw2()
+    JetEta_low_ratio_f.Divide(JetEta_low_bx0_bxm1_f)
+
+    JetEta_low_ratio_f.SetLineColor(50)
+    JetEta_low_ratio_f.SetMarkerColor(50)
+    JetEta_low_ratio_f.SetMarkerStyle(8)
+    JetEta_low_ratio_f.SetMarkerSize(0.5)
+    JetEta_low_ratio_f.SetTitle("FirstBunchInTrain")
+    JetEta_low_ratio_f.GetXaxis().SetTitle("Reco Jet #eta (GeV)")
+    JetEta_low_ratio_f.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
+    JetEta_low_ratio_f.SetMinimum(0)
+    JetEta_low_ratio_f.SetMaximum(0.037)
+    JetEta_low_ratio_f.SetStats(False)
+    JetEta_low_ratio_f.Draw("E")
+
+    JetEta_med_bxm1_f = inFile.Get("demo/JetEta_medpt_bxm1_firstbunch")
+    JetEta_med_bx0_bxm1_f = inFile.Get("demo/JetEta_medpt_bx0_bxm1_firstbunch")
+
+    JetEta_med_ratio_f = JetEta_med_bxm1_f.Clone()
+
+    JetEta_med_ratio_f.Sumw2()
+    JetEta_med_bx0_bxm1_f.Sumw2()
+    JetEta_med_ratio_f.Divide(JetEta_med_bx0_bxm1_f)
+
+    JetEta_med_ratio_f.SetLineColor(54)
+    JetEta_med_ratio_f.SetMarkerColor(54)
+    JetEta_med_ratio_f.SetMarkerStyle(29)
+    JetEta_med_ratio_f.SetMarkerSize(0.5)
+    JetEta_med_ratio_f.SetStats(False)
+    JetEta_med_ratio_f.Draw("E same")
+
+    JetEta_high_bxm1_f = inFile.Get("demo/JetEta_high_bxm1_firstbunch")
+    JetEta_high_bx0_bxm1_f = inFile.Get("demo/JetEta_high_bx0_bxm1_firstbunch")
+
+    JetEta_high_ratio_f = JetEta_high_bxm1_f.Clone()
+
+    JetEta_high_ratio_f.Sumw2()
+    JetEta_high_bx0_bxm1_f.Sumw2()
+    JetEta_high_ratio_f.Divide(JetEta_high_bx0_bxm1_f)
+
+    JetEta_high_ratio_f.SetLineColor(108)
+    JetEta_high_ratio_f.SetMarkerColor(108)
+    JetEta_high_ratio_f.SetMarkerStyle(21)
+    JetEta_high_ratio_f.SetMarkerSize(0.5)
+    JetEta_high_ratio_f.SetStats(False)
+    JetEta_high_ratio_f.Draw("E same")
+
+    legend = ROOT.TLegend(0.3,0.75,0.9,0.88)
+    legend.AddEntry(JetEta_low_ratio_f,"L1 p_T <= 15 GeV","L")
+    legend.AddEntry(JetEta_med_ratio_f,"15 GeV < L1 p_T <= 30 GeV","L")
+    legend.AddEntry(JetEta_high_ratio_f,"L1 p_T > 30 GeV","L")
+    legend.SetBorderSize(0)
+    legend.SetTextSize(0.04)
+    legend.Draw()
+
+    c_eta_rat_f.Draw()
+    c_eta_rat_f.SaveAs(f"{out_dir}/jeteta_ratio_ptsep_firstbunch.png")
+    c_eta_rat_f.Close()
+ 
     ############################################################################
     ############################# eta/phi plots ################################
     ############################################################################
@@ -444,8 +665,58 @@ def main(file_path, out_dir):
     c_ep_m1_f_on.Draw()
     c_ep_m1_f_on.SaveAs(f"{out_dir}/jetetaphi_bxm1_online_firstbunch.png")
     c_ep_m1_f_on.Close()
-    
-    
+   
+
+    ############################################################################
+    ############################# pt/eta plots ################################
+    ############################################################################
+
+    # UNPREFIRABLE
+    c_pe_0_u = ROOT.TCanvas( 'c_pe_0_u', 'c_pe_0_u', 100, 10, 600, 600 )
+    PtEta = inFile.Get("demo/JetPtEta_bx0_unprefirable")
+    PtEta.GetXaxis().SetTitle("p_T")
+    PtEta.GetYaxis().SetTitle("#eta")
+    PtEta.SetTitle("Unprefirable (Offline) Jets BX=0 (Offline Jet pT>30 GeV)")
+    PtEta.SetStats(False)
+    PtEta.Draw("colz")
+    c_pe_0_u.Draw()
+    c_pe_0_u.SaveAs(f"{out_dir}/jetpteta_bx0_offline_unprefirable.png")
+    c_pe_0_u.Close()
+ 
+    c_pe_m1_u = ROOT.TCanvas( 'c_pe_m1_u', 'c_pe_m1_u', 100, 10, 600, 600 )
+    PtEta = inFile.Get("demo/JetPtEta_bxm1_unprefirable")
+    PtEta.GetXaxis().SetTitle("p_T")
+    PtEta.GetYaxis().SetTitle("#eta")
+    PtEta.SetTitle("Unprefirable (Offline) Jets BX=-1 (Offline Jet pT>30 GeV)")
+    PtEta.SetStats(False)
+    PtEta.Draw("colz")
+    c_pe_m1_u.Draw()
+    c_pe_m1_u.SaveAs(f"{out_dir}/jetpteta_bxm1_offline_unprefirable.png")
+    c_pe_m1_u.Close()
+
+    # FIRSTBUNCH
+    c_pe_0_f = ROOT.TCanvas( 'c_pe_0_f', 'c_pe_0_f', 100, 10, 600, 600 )
+    PtEta = inFile.Get("demo/JetPtEta_bx0_firstbunch")
+    PtEta.GetXaxis().SetTitle("p_T")
+    PtEta.GetYaxis().SetTitle("#eta")
+    PtEta.SetTitle("FirstBunchInTrain (Offline) Jets BX=0 (Offline Jet pT>30 GeV)")
+    PtEta.SetStats(False)
+    PtEta.Draw("colz")
+    c_pe_0_f.Draw()
+    c_pe_0_f.SaveAs(f"{out_dir}/jetpteta_bx0_offline_firstbunch.png")
+    c_pe_0_f.Close()
+
+    c_pe_m1_f = ROOT.TCanvas( 'c_pe_m1_f', 'c_pe_m1_f', 100, 10, 600, 600 )
+    PtEta = inFile.Get("demo/JetPtEta_bxm1_firstbunch")
+    PtEta.GetXaxis().SetTitle("p_T")
+    PtEta.GetYaxis().SetTitle("#eta")
+    PtEta.SetTitle("FirstBunchInTrain (Offline) Jets BX=-1 (Offline Jet pT>30 GeV)")
+    PtEta.SetStats(False)
+    PtEta.Draw("colz")
+    c_pe_m1_f.Draw()
+    c_pe_m1_f.SaveAs(f"{out_dir}/jetpteta_bxm1_offline_firstbunch.png")
+    c_pe_m1_f.Close()    
+
     ################################################################################
     ################################# pt res plots #################################
     ################################################################################
