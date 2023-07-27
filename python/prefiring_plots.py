@@ -8,7 +8,19 @@ import uproot
 def main(file_path, out_dir):
     
     inFile = ROOT.TFile.Open(file_path, "READ")
-    
+   
+    c = ROOT.TCanvas( 'c', 'c', 100, 10, 600, 600 )
+    n_both = inFile.Get("demo/n_passboth")
+    n_both.SetLineColor(2)
+    n_both.SetMarkerColor(2)
+    n_both.SetMarkerStyle(47)
+    n_both.GetXaxis().SetTitle("Run Number")
+    n_both.SetStats(False)
+    n_both.Draw("PE")
+    n_both.GetXaxis().SetRangeUser(367000,369000)
+    c.Draw()
+    c.SaveAs(f"{out_dir}/n_both.png") 
+ 
     ###################################################################################
     ################################ n jet per bx plot ################################
     ###################################################################################
@@ -104,7 +116,7 @@ def main(file_path, out_dir):
     JetEt_ratio.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
     JetEt_ratio.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEt_ratio.SetMinimum(0)
-    JetEt_ratio.SetMaximum(0.1)
+    JetEt_ratio.SetMaximum(0.02)
     JetEt_ratio.Draw("E")
 
     c_et_rat.Draw()
@@ -228,7 +240,7 @@ def main(file_path, out_dir):
     JetEta_ratio.GetXaxis().SetTitle("Reco Jet #eta")
     JetEta_ratio.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEta_ratio.SetMinimum(0)
-    JetEta_ratio.SetMaximum(0.03)
+    JetEta_ratio.SetMaximum(0.005)
     JetEta_ratio.Draw("E")
 
     c_eta_rat.Draw()

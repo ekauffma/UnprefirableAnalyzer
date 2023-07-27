@@ -149,6 +149,7 @@ private:
 
   TH1I *nbx;
   TH1I *h_nevt;
+  TH1I *h_passboth;
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   edm::ESGetToken<SetupData, SetupRecord> setupToken_;
@@ -232,6 +233,7 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   nbx = fs->make<TH1I>("nJets_bx", "Number of jets per bx",5,-2.0,2.0);
 
   h_nevt = fs->make<TH1I>("nEvt_category", "Number of events passing each flag",10,0.0,10.0);
+  h_passboth = fs->make<TH1I>("n_passboth", "Number of events passing both FirstBunchInTrain and UnprefirableEvent",4700,368300,373000);
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   setupDataToken_ = esConsumes<SetupData, SetupRecord>();
@@ -282,7 +284,7 @@ bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection
 
   if(temp < 0.4) {
     match = true;
-    if(recojet.pt()>30){
+    if((recojet.pt()>15) && (matchedPt>30)){
       nbx->Fill(bx);
       h_jetet->Fill(recojet.pt());
       h_jeteta->Fill(recojet.eta());
@@ -370,6 +372,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
   if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_IsoMu24 ) h_nevt->Fill(6);
   if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_IsoMu24 ) h_nevt->Fill(7);
 
+  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain) h_passboth->Fill(iEvent.id().run());
 
   if((Flag_IsUnprefirable || Flag_FirstBunchInTrain) && passHLT_IsoMu24){
 
@@ -450,12 +453,12 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     h_jeteres_bx2,
                                     h_lowrespt_bx2);
 
-      if((match_bx0 || match_bxm1) && (*slimmedJets)[i].pt()>30){
+      if((match_bx0 || match_bxm1) && ((*slimmedJets)[i].pt()>15) && (l1_pt>30)){
         h_jetet_bx0_bxm1->Fill((*slimmedJets)[i].pt());
         h_jeteta_bx0_bxm1->Fill((*slimmedJets)[i].eta());
       }
 
-      if((match_bxm1 && !match_bx0) && (*slimmedJets)[i].pt()>30){
+      if((match_bxm1 && !match_bx0) && ((*slimmedJets)[i].pt()>15) && (l1_pt>30)){
         h_jetpteta_bxm1_nobx0->Fill((*slimmedJets)[i].pt(), (*slimmedJets)[i].eta());
       }
 
