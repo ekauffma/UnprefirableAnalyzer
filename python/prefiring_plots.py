@@ -8,7 +8,50 @@ import uproot
 def main(file_path, out_dir):
     
     inFile = ROOT.TFile.Open(file_path, "READ")
-    
+   
+    ###################################################################################
+    ########################## events passing flags plot ##############################
+    ###################################################################################
+
+    c = ROOT.TCanvas( 'c', 'c', 100, 10, 600, 600 )
+    n_both = inFile.Get("demo/n_passboth")
+    n_both.SetLineColor(2)
+    n_both.SetMarkerColor(2)
+    n_both.SetMarkerStyle(47)
+    n_both.GetXaxis().SetTitle("Run Number")
+    n_both.GetYaxis().SetTitle("Number of Events")
+    n_both.SetStats(False)
+    n_both.SetMaximum(5e7)
+    n_both.GetXaxis().SetRangeUser(367000,368900)
+    n_both.Draw("PE")
+
+    n_firstbunch = inFile.Get("demo/n_passFB")
+    n_firstbunch.SetLineColor(8)
+    n_firstbunch.SetMarkerColor(8)
+    n_firstbunch.SetMarkerStyle(40)
+    n_firstbunch.SetStats(False)
+    n_firstbunch.Draw("PE same")
+
+    n_unprefirable = inFile.Get("demo/n_passUP")
+    n_unprefirable.SetLineColor(6)
+    n_unprefirable.SetMarkerColor(6)
+    n_unprefirable.SetMarkerStyle(24)
+    n_unprefirable.SetStats(False)
+    n_unprefirable.Draw("PE same")
+
+    legend = ROOT.TLegend(0.3,0.76,0.9,0.88)
+    legend.AddEntry(n_both,"Passes Both","PE")
+    legend.AddEntry(n_firstbunch,"Only FirstBunchInTrain","PE")
+    legend.AddEntry(n_unprefirable,"Only UnprefirableEvent","PE")
+    legend.SetBorderSize(1)
+    legend.SetTextSize(0.04)
+    legend.Draw()
+
+    c.SetLogy()
+    c.Draw()
+    c.SaveAs(f"{out_dir}/n_pass.png")
+    c.Close() 
+
     ###################################################################################
     ################################ n jet per bx plot ################################
     ###################################################################################
@@ -169,7 +212,7 @@ def main(file_path, out_dir):
     JetEt_ratio_u.GetXaxis().SetTitle("Reco Jet E_{T} (GeV)")
     JetEt_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEt_ratio_u.SetMinimum(0)
-    JetEt_ratio_u.SetMaximum(0.25)
+    JetEt_ratio_u.SetMaximum(0.12)
     JetEt_ratio_u.Draw("E")
 
     JetEt_bxm1_f = inFile.Get("demo/JetEt_bxm1_firstbunch")
@@ -408,7 +451,7 @@ def main(file_path, out_dir):
     JetEta_ratio_u.GetXaxis().SetTitle("Reco Jet #eta")
     JetEta_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEta_ratio_u.SetMinimum(0)
-    JetEta_ratio_u.SetMaximum(0.25)
+    JetEta_ratio_u.SetMaximum(0.05)
     JetEta_ratio_u.Draw("E")
 
     JetEta_bxm1_f = inFile.Get("demo/JetEta_bxm1_firstbunch")
@@ -456,7 +499,7 @@ def main(file_path, out_dir):
     JetEta_low_ratio_u.GetXaxis().SetTitle("Reco Jet #eta")
     JetEta_low_ratio_u.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEta_low_ratio_u.SetMinimum(0)
-    JetEta_low_ratio_u.SetMaximum(0.5)
+    JetEta_low_ratio_u.SetMaximum(0.25)
     JetEta_low_ratio_u.SetStats(False)
     JetEta_low_ratio_u.Draw("E")
 
@@ -492,10 +535,10 @@ def main(file_path, out_dir):
     JetEta_high_ratio_u.SetStats(False);
     JetEta_high_ratio_u.Draw("E same")
 
-    legend = ROOT.TLegend(0.3,0.75,0.9,0.88)
-    legend.AddEntry(JetEta_low_ratio_u,"L1 p_T <= 15 GeV","L")
-    legend.AddEntry(JetEta_med_ratio_u,"15 GeV < L1 p_T <= 30 GeV","L")
-    legend.AddEntry(JetEta_high_ratio_u,"L1 p_T > 30 GeV","L")
+    legend = ROOT.TLegend(0.3,0.75,0.6,0.88)
+    legend.AddEntry(JetEta_low_ratio_u,"L1 p_T > 15 GeV","L")
+    legend.AddEntry(JetEta_med_ratio_u,"L1 p_T > 40 GeV","L")
+    legend.AddEntry(JetEta_high_ratio_u,"L1 p_T > 180 GeV","L")
     legend.SetBorderSize(0)
     legend.SetTextSize(0.04)
     legend.Draw()
@@ -560,10 +603,10 @@ def main(file_path, out_dir):
     JetEta_high_ratio_f.SetStats(False)
     JetEta_high_ratio_f.Draw("E same")
 
-    legend = ROOT.TLegend(0.3,0.75,0.9,0.88)
-    legend.AddEntry(JetEta_low_ratio_f,"L1 p_T <= 15 GeV","L")
-    legend.AddEntry(JetEta_med_ratio_f,"15 GeV < L1 p_T <= 30 GeV","L")
-    legend.AddEntry(JetEta_high_ratio_f,"L1 p_T > 30 GeV","L")
+    legend = ROOT.TLegend(0.3,0.75,0.6,0.88)
+    legend.AddEntry(JetEta_low_ratio_f,"L1 p_T > 15 GeV","L")
+    legend.AddEntry(JetEta_med_ratio_f,"L1 p_T > 40 GeV","L")
+    legend.AddEntry(JetEta_high_ratio_f,"L1 p_T > 180 GeV","L")
     legend.SetBorderSize(0)
     legend.SetTextSize(0.04)
     legend.Draw()
@@ -665,7 +708,48 @@ def main(file_path, out_dir):
     c_ep_m1_f_on.Draw()
     c_ep_m1_f_on.SaveAs(f"{out_dir}/jetetaphi_bxm1_online_firstbunch.png")
     c_ep_m1_f_on.Close()
-   
+ 
+    
+ 
+    # RATIO
+    c_etaphi_rat_u = ROOT.TCanvas( 'c_etaphi_rat_u', 'c_etaphi_rat_u', 10, 10, 800, 600 )
+
+    JetEtaPhi_bxm1_u = inFile.Get("demo/JetEtaPhi_bxm1_unprefirable")
+    JetEtaPhi_bx0_bxm1_u = inFile.Get("demo/JetEtaPhi_bx0_bxm1_unprefirable")
+    JetEtaPhi_ratio_u = JetEtaPhi_bxm1_u.Clone()
+
+    JetEtaPhi_ratio_u.Sumw2()
+    JetEtaPhi_bx0_bxm1_u.Sumw2()
+    JetEtaPhi_ratio_u.Divide(JetEtaPhi_bx0_bxm1_u)
+    JetEtaPhi_ratio_u.SetStats(False)
+    JetEtaPhi_ratio_u.SetTitle("Unprefirable (bx=-1)/(bx=0 or bx=-1) for Jets with pT>180 GeV")
+    JetEtaPhi_ratio_u.GetXaxis().SetTitle("Reco Jet #eta")
+    JetEtaPhi_ratio_u.GetYaxis().SetTitle("Reco Jet #phi")
+    JetEtaPhi_ratio_u.Rebin2D()
+    JetEtaPhi_ratio_u.Draw("colz")
+
+    c_etaphi_rat_u.Draw()
+    c_etaphi_rat_u.SaveAs(f"{out_dir}/jetetaphi_ratio_unprefirable.png")
+    c_etaphi_rat_u.Close() 
+
+    c_etaphi_rat_f = ROOT.TCanvas( 'c_etaphi_rat_f', 'c_etaphi_rat_f', 10, 10, 800, 600 )
+
+    JetEtaPhi_bxm1_f = inFile.Get("demo/JetEtaPhi_bxm1_firstbunch")
+    JetEtaPhi_bx0_bxm1_f = inFile.Get("demo/JetEtaPhi_bx0_bxm1_firstbunch")
+    JetEtaPhi_ratio_f = JetEtaPhi_bxm1_f.Clone()
+
+    JetEtaPhi_ratio_f.Sumw2()
+    JetEtaPhi_bx0_bxm1_f.Sumw2()
+    JetEtaPhi_ratio_f.Divide(JetEtaPhi_bx0_bxm1_f)
+    JetEtaPhi_ratio_f.SetStats(False)
+    JetEtaPhi_ratio_f.SetTitle("FirstBunchInTrain (bx=-1)/(bx=0 or bx=-1) for Jets with pT>180 GeV")
+    JetEtaPhi_ratio_f.GetXaxis().SetTitle("Reco Jet #eta")
+    JetEtaPhi_ratio_f.GetYaxis().SetTitle("Reco Jet #phi")
+    JetEtaPhi_ratio_f.Draw("colz")
+
+    c_etaphi_rat_f.Draw()
+    c_etaphi_rat_f.SaveAs(f"{out_dir}/jetetaphi_ratio_firstbunch.png")
+    c_etaphi_rat_f.Close()
 
     ############################################################################
     ############################# pt/eta plots ################################
