@@ -24,6 +24,6 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run3_data', '')
 
 process.p = cms.Path(process.demo)

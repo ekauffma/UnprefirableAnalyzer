@@ -387,7 +387,7 @@ constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(re
 }
 
 template <typename RecoJet, typename L1JetCollection>
-bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection, int bx, float* l1_pt, 
+bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection, int bx, float* l1_pt, float cut, 
                   TH1I* nbx, TH1F* h_jetet, TH1F* h_jeteta, TH2F* h_jetetaphi, TH2F* h_jetetaphi_on, TH2F* h_jetpteta, TH1F* h_jeteres, TH1F* h_lowrespt) {
 
   bool match = false;
@@ -408,7 +408,7 @@ bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection
 
   if(temp < 0.4) {
     match = true;
-    if(matchedPt>180){
+    if(matchedPt>cut){
       nbx->Fill(bx);
       h_jetet->Fill(recojet.pt());
       h_jeteta->Fill(recojet.eta());
@@ -430,6 +430,11 @@ bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection
 // ------------ method called for each event  ------------
 void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup) {
   using namespace edm;
+
+  // define cuts
+  float highCut = 180.;
+  float medCut = 40.;
+  float lowCut = 15.;
  
   // get reco jets and muons
   edm::Handle< std::vector<pat::Jet> > slimmedJets;
@@ -497,6 +502,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets,
                                     0,
                                     &l1_pt,
+                                    highCut,
                                     nbx_f,
                                     h_jetet_bx0_f,
                                     h_jeteta_bx0_f,
@@ -509,6 +515,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                      jets,
                                      -1,
                                      &l1_pt,
+                                     highCut,
                                      nbx_f,
                                      h_jetet_bxm1_f,
                                      h_jeteta_bxm1_f,
@@ -521,6 +528,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                      jets,
                                      -2,
                                      &l1_pt,
+                                     highCut,
                                      nbx_f,
                                      h_jetet_bxm2_f,
                                      h_jeteta_bxm2_f,
@@ -533,6 +541,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets,
                                     1,
                                     &l1_pt,
+                                    highCut,
                                     nbx_f,
                                     h_jetet_bx1_f,
                                     h_jeteta_bx1_f,
@@ -545,6 +554,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets,
                                     2,
                                     &l1_pt,
+                                    highCut,
                                     nbx_f,
                                     h_jetet_bx2_f,
                                     h_jeteta_bx2_f,
@@ -554,51 +564,51 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     h_jeteres_bx2_f,
                                     h_lowrespt_bx2_f);
 
-      if((match_bx0 || match_bxm1) && (l1_pt > 180)){
+      if((match_bx0 || match_bxm1) && (l1_pt > highCut)){
         h_jetet_bx0_bxm1_f->Fill((*slimmedJets)[i].pt());
         h_jeteta_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
         h_jetetaphi_bx0_bxm1_f->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
       }
 
-      if((match_bxm1 && !match_bx0) && (l1_pt > 180)){
+      if((match_bxm1 && !match_bx0) && (l1_pt > highCut)){
         h_jetpteta_bxm1_nobx0_f->Fill((*slimmedJets)[i].pt(), (*slimmedJets)[i].eta());
       }
 
       // pT separated hists for bx=0
       if(match_bx0){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=-1
       if(match_bxm1){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=0 or bx=-1
       if(match_bx0 || match_bxm1){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
       }
@@ -651,6 +661,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets, 
                                     0, 
                                     &l1_pt,
+                                    highCut,
                                     nbx_u, 
                                     h_jetet_bx0_u, 
                                     h_jeteta_bx0_u, 
@@ -663,6 +674,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                      jets,
                                      -1,
                                      &l1_pt,
+                                     highCut,
                                      nbx_u,
                                      h_jetet_bxm1_u,
                                      h_jeteta_bxm1_u,
@@ -675,6 +687,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                      jets,
                                      -2,
                                      &l1_pt,
+                                     highCut,
                                      nbx_u,
                                      h_jetet_bxm2_u,
                                      h_jeteta_bxm2_u,
@@ -687,6 +700,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets,
                                     1,
                                     &l1_pt,
+                                    highCut,
                                     nbx_u,
                                     h_jetet_bx1_u,
                                     h_jeteta_bx1_u,
@@ -699,6 +713,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     jets,
                                     2,
                                     &l1_pt,
+                                    highCut,
                                     nbx_u,
                                     h_jetet_bx2_u,
                                     h_jeteta_bx2_u,
@@ -708,51 +723,51 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
                                     h_jeteres_bx2_u,
                                     h_lowrespt_bx2_u);
 
-      if((match_bx0 || match_bxm1) && (*slimmedJets)[i].pt()>180){
+      if((match_bx0 || match_bxm1) && (l1_pt>highCut)){
         h_jetet_bx0_bxm1_u->Fill((*slimmedJets)[i].pt());
         h_jeteta_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
         h_jetetaphi_bx0_bxm1_u->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
       }
 
-      if((match_bxm1 && !match_bx0) && (*slimmedJets)[i].pt()>180){
+      if((match_bxm1 && !match_bx0) && (l1_pt>highCut)){
         h_jetpteta_bxm1_nobx0_u->Fill((*slimmedJets)[i].pt(), (*slimmedJets)[i].eta());
       }
 
       // pT separated hists for bx=0
       if(match_bx0){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=-1
       if(match_bxm1){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=0 or bx=-1
       if(match_bx0 || match_bxm1){
-        if(l1_pt>15){
+        if(l1_pt>lowCut){
           h_jeteta_lowpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>40){
+        if(l1_pt>medCut){
           h_jeteta_medpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>180){
+        if(l1_pt>highCut){
           h_jeteta_highpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
       }
