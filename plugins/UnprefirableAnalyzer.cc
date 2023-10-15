@@ -501,13 +501,14 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     unsigned int indx = keyval.second.getIndex();
     if(name.find("L1_FirstBunchBeforeTrain")!=string::npos) idx_L1_FirstBunchBeforeTrain = indx;
   } 
- 
+
   // get reco jets and muons
   edm::Handle< std::vector<pat::Jet> > slimmedJets;
   iEvent.getByToken(slimmedJetsToken_,slimmedJets ); 
   edm::Handle< std::vector<pat::Muon> > slimmedMuons;
   iEvent.getByToken(slimmedMuonsToken_,slimmedMuons );
 
+  iEvent.getByToken(gtAlgBlkToken, gtAlgBlkHandle);
 
   //check whether any seed fired in bx=-1
   _l1FinalOR_noFirstBunchBeforeTrain_BXmin1 = false;
@@ -540,7 +541,6 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
   
   //FirstBunchInTrain
   Flag_FirstBunchInTrain = false;
-  iEvent.getByToken(gtAlgBlkToken, gtAlgBlkHandle);
   if(gtAlgBlkHandle.isValid()){
     std::vector<GlobalAlgBlk>::const_iterator algBlk = gtAlgBlkHandle->begin(0);
     if(algBlk != gtAlgBlkHandle->end(0)){
@@ -555,7 +555,7 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     }
   }
 
-  if(Flag_FirstBunchInTrain  && passHLT_AK8PFJet500){
+  if(Flag_FirstBunchInTrain && passHLT_AK8PFJet500){
     
     cout<<"    Flag_FirstBunchInTrain = "<<Flag_FirstBunchInTrain<<endl;
 
@@ -726,14 +726,14 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     cout<<"    slimmedJets size = "<<(*slimmedJets).size()<<endl;
 
     float jetE1 = -1.0;
-    float jetpt1;
-    float jeteta1;
-    float jetphi1;
+    float jetpt1 = 0.0;
+    float jeteta1 = 0.0;
+    float jetphi1 = 0.0;
 
     float jetE2 = -1.0;
-    float jetpt2;
-    float jeteta2;
-    float jetphi2;
+    float jetpt2 = 0.0;
+    float jeteta2 = 0.0;
+    float jetphi2 = 0.0;
 
     // iterate through reco jets
     for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
