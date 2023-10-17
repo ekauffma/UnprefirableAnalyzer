@@ -103,51 +103,12 @@ private:
   const std::map<std::string, L1TUtmAlgorithm>* algorithmMap;
 
   // define histograms
-  TH1F *h_jetet_bx0_u;
-  TH1F *h_jetet_bxm1_u;
-  TH1F *h_jetet_bx0_bxm1_u;
-  TH1F *h_jetet_bxm2_u;
-  TH1F *h_jetet_bx1_u;
-  TH1F *h_jetet_bx2_u;
-
-  TH1F *h_jeteta_bx0_u;
-  TH1F *h_jeteta_bxm1_u;
-  TH1F *h_jeteta_bx0_bxm1_u;
-  TH1F *h_jeteta_bxm2_u;
-  TH1F *h_jeteta_bx1_u;
-  TH1F *h_jeteta_bx2_u;
-
-  TH1F *h_jeteres_bx0_u;
-  TH1F *h_jeteres_bxm1_u;
-  TH1F *h_jeteres_bxm2_u;
-  TH1F *h_jeteres_bx1_u;
-  TH1F *h_jeteres_bx2_u;
-
-  TH1F *h_lowrespt_bx0_u;
-  TH1F *h_lowrespt_bxm1_u;
-  TH1F *h_lowrespt_bxm2_u;
-  TH1F *h_lowrespt_bx1_u;
-  TH1F *h_lowrespt_bx2_u;
-
   TH2F *h_jetetaphi_bx0_u;
   TH2F *h_jetetaphi_bxm1_u;
   TH2F *h_jetetaphi_bxm2_u;
   TH2F *h_jetetaphi_bx1_u;
   TH2F *h_jetetaphi_bx2_u;
   TH2F *h_jetetaphi_bx0_bxm1_u;
-
-  TH2F *h_jetetaphi_bx0_on_u;
-  TH2F *h_jetetaphi_bxm1_on_u;
-  TH2F *h_jetetaphi_bxm2_on_u;
-  TH2F *h_jetetaphi_bx1_on_u;
-  TH2F *h_jetetaphi_bx2_on_u;
-
-  TH2F *h_jetpteta_bx0_u;
-  TH2F *h_jetpteta_bxm1_u;
-  TH2F *h_jetpteta_bxm2_u;
-  TH2F *h_jetpteta_bx1_u;
-  TH2F *h_jetpteta_bx2_u;
-  TH2F *h_jetpteta_bxm1_nobx0_u;
 
   TH1F *h_jeteta_lowpt_bx0_u;
   TH1F *h_jeteta_medpt_bx0_u;
@@ -159,53 +120,12 @@ private:
   TH1F *h_jeteta_medpt_bx0_bxm1_u;
   TH1F *h_jeteta_highpt_bx0_bxm1_u;
 
-  TH1I *nbx_u;
-
-  TH1F *h_jetet_bx0_f;
-  TH1F *h_jetet_bxm1_f;
-  TH1F *h_jetet_bx0_bxm1_f;
-  TH1F *h_jetet_bxm2_f;
-  TH1F *h_jetet_bx1_f;
-  TH1F *h_jetet_bx2_f;
-
-  TH1F *h_jeteta_bx0_f;
-  TH1F *h_jeteta_bxm1_f;
-  TH1F *h_jeteta_bx0_bxm1_f;
-  TH1F *h_jeteta_bxm2_f;
-  TH1F *h_jeteta_bx1_f;
-  TH1F *h_jeteta_bx2_f;
-
-  TH1F *h_jeteres_bx0_f;
-  TH1F *h_jeteres_bxm1_f;
-  TH1F *h_jeteres_bxm2_f;
-  TH1F *h_jeteres_bx1_f;
-  TH1F *h_jeteres_bx2_f;
-
-  TH1F *h_lowrespt_bx0_f;
-  TH1F *h_lowrespt_bxm1_f;
-  TH1F *h_lowrespt_bxm2_f;
-  TH1F *h_lowrespt_bx1_f;
-  TH1F *h_lowrespt_bx2_f;
-
   TH2F *h_jetetaphi_bx0_f;
   TH2F *h_jetetaphi_bxm1_f;
   TH2F *h_jetetaphi_bxm2_f;
   TH2F *h_jetetaphi_bx1_f;
   TH2F *h_jetetaphi_bx2_f;
   TH2F *h_jetetaphi_bx0_bxm1_f;
-
-  TH2F *h_jetetaphi_bx0_on_f;
-  TH2F *h_jetetaphi_bxm1_on_f;
-  TH2F *h_jetetaphi_bxm2_on_f;
-  TH2F *h_jetetaphi_bx1_on_f;
-  TH2F *h_jetetaphi_bx2_on_f;
-
-  TH2F *h_jetpteta_bx0_f;
-  TH2F *h_jetpteta_bxm1_f;
-  TH2F *h_jetpteta_bxm2_f;
-  TH2F *h_jetpteta_bx1_f;
-  TH2F *h_jetpteta_bx2_f;
-  TH2F *h_jetpteta_bxm1_nobx0_f;
 
   TH1F *h_jeteta_lowpt_bx0_f;
   TH1F *h_jeteta_medpt_bx0_f;
@@ -217,14 +137,27 @@ private:
   TH1F *h_jeteta_medpt_bx0_bxm1_f;
   TH1F *h_jeteta_highpt_bx0_bxm1_f;
 
-  TH1I *nbx_f;
-  TH1I *h_nevt;
-  TH1I *h_passboth;
-  TH1I *h_passUP;
-  TH1I *h_passFB;
-
   TH1F *h_mjj_passL1FinalORinBXm1_u;
   TH1F *h_mjj_failL1FinalORinBXm1_u;
+  TH1F *h_deltaR_passL1FinalORinBXm1_u;
+  TH1F *h_deltaR_failL1FinalORinBXm1_u;
+  TH1F *h_deltaPhi_passL1FinalORinBXm1_u;
+  TH1F *h_deltaPhi_failL1FinalORinBXm1_u;
+  TH1F *h_deltaEta_passL1FinalORinBXm1_u;
+  TH1F *h_deltaEta_failL1FinalORinBXm1_u;
+  TH1F *h_pt0_passL1FinalORinBXm1_u;
+  TH1F *h_pt0_failL1FinalORinBXm1_u;
+  TH1F *h_pt1_passL1FinalORinBXm1_u;
+  TH1F *h_pt1_failL1FinalORinBXm1_u;
+  TH1F *h_eta0_passL1FinalORinBXm1_u;
+  TH1F *h_eta0_failL1FinalORinBXm1_u;
+  TH1F *h_eta1_passL1FinalORinBXm1_u;
+  TH1F *h_eta1_failL1FinalORinBXm1_u;
+  TH1F *h_phi0_passL1FinalORinBXm1_u;
+  TH1F *h_phi0_failL1FinalORinBXm1_u;
+  TH1F *h_phi1_passL1FinalORinBXm1_u;
+  TH1F *h_phi1_failL1FinalORinBXm1_u;
+
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   edm::ESGetToken<SetupData, SetupRecord> setupToken_;
@@ -251,32 +184,6 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   edm::Service<TFileService> fs;
   
   // histograms for UnprefirableEvent
-  h_jetet_bx0_u = fs->make<TH1F>("JetEt_bx0_unprefirable","Jet E_{T} at BX = 0", 40, 0, 250);
-  h_jetet_bxm1_u = fs->make<TH1F>("JetEt_bxm1_unprefirable","Jet E_{T} at BX = -1", 40, 0, 250);
-  h_jetet_bx0_bxm1_u = fs->make<TH1F>("JetEt_bx0_bxm1_unprefirable","Jet E_{T} at BX = 0 or -1", 40, 0, 250);  
-  h_jetet_bxm2_u = fs->make<TH1F>("JetEt_bxm2_unprefirable","Jet E_{T} at BX = -2", 40, 0, 250);
-  h_jetet_bx1_u = fs->make<TH1F>("JetEt_bx1_unprefirable","Jet E_{T} at BX = 1", 40, 0, 250);
-  h_jetet_bx2_u = fs->make<TH1F>("JetEt_bx2_unprefirable","Jet E_{T} at BX = 2", 40, 0, 250);
-
-  h_jeteta_bx0_u = fs->make<TH1F>("JetEta_bx0_unprefirable","Jet #eta at BX = 0", 40, -5, 5);
-  h_jeteta_bxm1_u = fs->make<TH1F>("JetEta_bxm1_unprefirable","Jet #eta at BX = -1", 40, -5, 5);
-  h_jeteta_bx0_bxm1_u = fs->make<TH1F>("JetEta_bx0_bxm1_unprefirable","Jet #eta at BX = 0 or -1", 40, -5, 5);
-  h_jeteta_bxm2_u = fs->make<TH1F>("JetEta_bxm2_unprefirable","Jet #eta at BX = -2", 40, -5, 5);
-  h_jeteta_bx1_u = fs->make<TH1F>("JetEta_bx1_unprefirable","Jet #eta at BX = 1", 40, -5, 5);
-  h_jeteta_bx2_u = fs->make<TH1F>("JetEta_bx2_unprefirable","Jet #eta at BX = 2", 40, -5, 5);
-
-  h_jeteres_bx0_u = fs->make<TH1F>("JetERes_bx0_unprefirable","Jet Energy Resolution at BX = 0", 100, 0, 10);
-  h_jeteres_bxm1_u = fs->make<TH1F>("JetERes_bxm1_unprefirable","Jet Energy Resolution at BX = -1", 100, 0, 10);
-  h_jeteres_bxm2_u = fs->make<TH1F>("JetERes_bxm2_unprefirable","Jet Energy Resolution at BX = -2", 100, 0, 10);
-  h_jeteres_bx1_u = fs->make<TH1F>("JetERes_bx1_unprefirable","Jet Energy Resolution at BX = 1", 100, 0, 10);
-  h_jeteres_bx2_u = fs->make<TH1F>("JetERes_bx2_unprefirable","Jet Energy Resolution at BX = 2", 100, 0, 10);
-
-  h_lowrespt_bx0_u = fs->make<TH1F>("JetPt_lowres_bx0_unprefirable", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bxm1_u = fs->make<TH1F>("JetPt_lowres_bxm1_unprefirable", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bxm2_u = fs->make<TH1F>("JetPt_lowres_bxm2_unprefirable", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bx1_u = fs->make<TH1F>("JetPt_lowres_bx1_unprefirable", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bx2_u = fs->make<TH1F>("JetPt_lowres_bx2_unprefirable", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-
   h_jetetaphi_bx0_u = fs->make<TH2F>("JetEtaPhi_bx0_unprefirable","#eta vs #phi of jets with p_T>180 GeV (BX=0)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bxm1_u = fs->make<TH2F>("JetEtaPhi_bxm1_unprefirable","#eta vs #phi of jets with p_T>180 GeV (BX=-1)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bxm2_u = fs->make<TH2F>("JetEtaPhi_bxm2_unprefirable","#eta vs #phi of jets with p_T>180 GeV (BX=-2)",40, -5, 5, 40, -M_PI, M_PI);
@@ -284,19 +191,6 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   h_jetetaphi_bx2_u = fs->make<TH2F>("JetEtaPhi_bx2_unprefirable","#eta vs #phi of jets with p_T>180 GeV (BX=2)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bx0_bxm1_u = fs->make<TH2F>("JetEtaPhi_bx0_bxm1_unprefirable","#eta vs #phi of jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI); 
  
-  h_jetetaphi_bx0_on_u = fs->make<TH2F>("JetEtaPhi_bx0_online_unprefirable","#eta vs #phi of online jets with p_T>180 GeV (BX=0)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bxm1_on_u = fs->make<TH2F>("JetEtaPhi_bxm1_online_unprefirable","#eta vs #phi of online jets with p_T>180 GeV (BX=-1)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bxm2_on_u = fs->make<TH2F>("JetEtaPhi_bxm2_online_unprefirable","#eta vs #phi of online jets with p_T>180 GeV (BX=-2)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bx1_on_u = fs->make<TH2F>("JetEtaPhi_bx1_online_unprefirable","#eta vs #phi of online jets with p_T>180 GeV (BX=1)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bx2_on_u = fs->make<TH2F>("JetEtaPhi_bx2_online_unprefirable","#eta vs #phi of online jets with p_T>180 GeV (BX=2)",40, -5, 5, 40, -M_PI, M_PI);
-
-  h_jetpteta_bx0_u = fs->make<TH2F>("JetPtEta_bx0_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm1_u = fs->make<TH2F>("JetPtEta_bxm1_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm2_u = fs->make<TH2F>("JetPtEta_bxm2_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bx1_u = fs->make<TH2F>("JetPtEta_bx1_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bx2_u = fs->make<TH2F>("JetPtEta_bx2_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm1_nobx0_u = fs->make<TH2F>("JetPtEta_bxm1_nobx0_unprefirable", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-
   h_jeteta_lowpt_bx0_u = fs->make<TH1F>("JetEta_lowpt_bx0_unprefirable", "Jet #eta for L1 pT<=15 GeV at BX=0", 40, -5, 5);
   h_jeteta_medpt_bx0_u = fs->make<TH1F>("JetEta_medpt_bx0_unprefirable", "Jet #eta for L1 15 GeV<pT<=30 GeV at BX=0", 40, -5, 5);
   h_jeteta_highpt_bx0_u = fs->make<TH1F>("JetEta_high_bx0_unprefirable", "Jet #eta for L1 pT>30 GeV at BX=0", 40, -5, 5);
@@ -307,54 +201,13 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   h_jeteta_medpt_bx0_bxm1_u = fs->make<TH1F>("JetEta_medpt_bx0_bxm1_unprefirable", "Jet #eta for L1 15 GeV<pT<=30 GeV at BX=0 or BX=-1", 40, -5, 5);
   h_jeteta_highpt_bx0_bxm1_u = fs->make<TH1F>("JetEta_high_bx0_bxm1_unprefirable", "Jet #eta for L1 pT>30 GeV at BX=0 or BX=-1", 40, -5, 5);
 
-  nbx_u = fs->make<TH1I>("nJets_bx_unprefirable", "Number of jets per bx",5,-2.0,2.0);
-
   // histograms for FirstBunchInCrossing
-  h_jetet_bx0_f = fs->make<TH1F>("JetEt_bx0_firstbunch","Jet E_{T} at BX = 0", 40, 0, 250);
-  h_jetet_bxm1_f = fs->make<TH1F>("JetEt_bxm1_firstbunch","Jet E_{T} at BX = -1", 40, 0, 250);
-  h_jetet_bx0_bxm1_f = fs->make<TH1F>("JetEt_bx0_bxm1_firstbunch","Jet E_{T} at BX = 0 or -1", 40, 0, 250);
-  h_jetet_bxm2_f = fs->make<TH1F>("JetEt_bxm2_firstbunch","Jet E_{T} at BX = -2", 40, 0, 250);
-  h_jetet_bx1_f = fs->make<TH1F>("JetEt_bx1_firstbunch","Jet E_{T} at BX = 1", 40, 0, 250);
-  h_jetet_bx2_f = fs->make<TH1F>("JetEt_bx2_firstbunch","Jet E_{T} at BX = 2", 40, 0, 250);
-
-  h_jeteta_bx0_f = fs->make<TH1F>("JetEta_bx0_firstbunch","Jet #eta at BX = 0", 40, -5, 5);
-  h_jeteta_bxm1_f = fs->make<TH1F>("JetEta_bxm1_firstbunch","Jet #eta at BX = -1", 40, -5, 5);
-  h_jeteta_bx0_bxm1_f = fs->make<TH1F>("JetEta_bx0_bxm1_firstbunch","Jet #eta at BX = 0 or -1", 40, -5, 5);
-  h_jeteta_bxm2_f = fs->make<TH1F>("JetEta_bxm2_firstbunch","Jet #eta at BX = -2", 40, -5, 5);
-  h_jeteta_bx1_f = fs->make<TH1F>("JetEta_bx1_firstbunch","Jet #eta at BX = 1", 40, -5, 5);
-  h_jeteta_bx2_f = fs->make<TH1F>("JetEta_bx2_firstbunch","Jet #eta at BX = 2", 40, -5, 5);
-
-  h_jeteres_bx0_f = fs->make<TH1F>("JetERes_bx0_firstbunch","Jet Energy Resolution at BX = 0", 100, 0, 10);
-  h_jeteres_bxm1_f = fs->make<TH1F>("JetERes_bxm1_firstbunch","Jet Energy Resolution at BX = -1", 100, 0, 10);
-  h_jeteres_bxm2_f = fs->make<TH1F>("JetERes_bxm2_firstbunch","Jet Energy Resolution at BX = -2", 100, 0, 10);
-  h_jeteres_bx1_f = fs->make<TH1F>("JetERes_bx1_firstbunch","Jet Energy Resolution at BX = 1", 100, 0, 10);
-  h_jeteres_bx2_f = fs->make<TH1F>("JetERes_bx2_firstbunch","Jet Energy Resolution at BX = 2", 100, 0, 10);
-
-  h_lowrespt_bx0_f = fs->make<TH1F>("JetPt_lowres_bx0_firstbunch", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bxm1_f = fs->make<TH1F>("JetPt_lowres_bxm1_firstbunch", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bxm2_f = fs->make<TH1F>("JetPt_lowres_bxm2_firstbunch", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bx1_f = fs->make<TH1F>("JetPt_lowres_bx1_firstbunch", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-  h_lowrespt_bx2_f = fs->make<TH1F>("JetPt_lowres_bx2_firstbunch", "Online Jet p_T for Low Resolution (<0.5) Jets", 40, 30, 250);
-
   h_jetetaphi_bx0_f = fs->make<TH2F>("JetEtaPhi_bx0_firstbunch","#eta vs #phi of jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI); 
   h_jetetaphi_bxm1_f = fs->make<TH2F>("JetEtaPhi_bxm1_firstbunch","#eta vs #phi of jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bxm2_f = fs->make<TH2F>("JetEtaPhi_bxm2_firstbunch","#eta vs #phi of jets with p_T>180 GeV (BX=-2)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bx1_f = fs->make<TH2F>("JetEtaPhi_bx1_firstbunch","#eta vs #phi of jets with p_T>180 GeV (BX=1)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bx2_f = fs->make<TH2F>("JetEtaPhi_bx2_firstbunch","#eta vs #phi of jets with p_T>180 GeV (BX=2)",40, -5, 5, 40, -M_PI, M_PI);
   h_jetetaphi_bx0_bxm1_f = fs->make<TH2F>("JetEtaPhi_bx0_bxm1_firstbunch","#eta vs #phi of jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI);
-
-  h_jetetaphi_bx0_on_f = fs->make<TH2F>("JetEtaPhi_bx0_online_firstbunch","#eta vs #phi of online jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bxm1_on_f = fs->make<TH2F>("JetEtaPhi_bxm1_online_firstbunch","#eta vs #phi of online jets with p_T>180 GeV",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bxm2_on_f = fs->make<TH2F>("JetEtaPhi_bxm2_online_firstbunch","#eta vs #phi of online jets with p_T>180 GeV (BX=-2)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bx1_on_f = fs->make<TH2F>("JetEtaPhi_bx1_online_firstbunch","#eta vs #phi of online jets with p_T>180 GeV (BX=1)",40, -5, 5, 40, -M_PI, M_PI);
-  h_jetetaphi_bx2_on_f = fs->make<TH2F>("JetEtaPhi_bx2_online_firstbunch","#eta vs #phi of online jets with p_T>180 GeV (BX=2)",40, -5, 5, 40, -M_PI, M_PI);
-
-  h_jetpteta_bx0_f = fs->make<TH2F>("JetPtEta_bx0_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm1_f = fs->make<TH2F>("JetPtEta_bxm1_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm2_f = fs->make<TH2F>("JetPtEta_bxm2_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bx1_f = fs->make<TH2F>("JetPtEta_bx1_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bx2_f = fs->make<TH2F>("JetPtEta_bx2_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
-  h_jetpteta_bxm1_nobx0_f = fs->make<TH2F>("JetPtEta_bxm1_nobx0_firstbunch", "Jet p_T vs #eta", 40, 30, 250, 40, -5, 5);
 
   h_jeteta_lowpt_bx0_f = fs->make<TH1F>("JetEta_lowpt_bx0_firstbunch", "Jet #eta for L1 pT<=15 GeV at BX=0", 40, -5, 5);
   h_jeteta_medpt_bx0_f = fs->make<TH1F>("JetEta_medpt_bx0_firstbunch", "Jet #eta for L1 15 GeV<pT<=30 GeV at BX=0", 40, -5, 5);
@@ -366,16 +219,27 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   h_jeteta_medpt_bx0_bxm1_f = fs->make<TH1F>("JetEta_medpt_bx0_bxm1_firstbunch", "Jet #eta for L1 15 GeV<pT<=30 GeV at BX=0 or BX=-1", 40, -5, 5);
   h_jeteta_highpt_bx0_bxm1_f = fs->make<TH1F>("JetEta_high_bx0_bxm1_firstbunch", "Jet #eta for L1 pT>30 GeV at BX=0 or BX=-1", 40, -5, 5);
 
-  nbx_f = fs->make<TH1I>("nJets_bx_firstbunch", "Number of jets per bx",6,-2.0,3.0);
-
-  h_nevt = fs->make<TH1I>("nEvt_category", "Number of events passing each flag",10,0.0,10.0);
-
-  h_passboth = fs->make<TH1I>("n_passboth", "Number of events passing both FirstBunchInTrain and UnprefirableEvent",4700,368300,373000);
-  h_passFB = fs->make<TH1I>("n_passFB", "Number of events passing FirstBunchInTrain and not UnprefirableEvent",4700,368300,373000);
-  h_passUP = fs->make<TH1I>("n_passUP", "Number of events passing UnprefirableEvent and not FirstBunchInTrain",4700,368300,373000);
-
-  h_mjj_passL1FinalORinBXm1_u = fs->make<TH1F>("mjj_passL1FinalORinBXm1_unprefirable", "Dijet Mass (passL1FinalORinBXm1=true)",20,1000,5000);
-  h_mjj_failL1FinalORinBXm1_u = fs->make<TH1F>("mjj_failL1FinalORinBXm1_unprefirable", "Dijet Mass (passL1FinalORinBXm1=false)",20,1000,5000);
+  float ptvalues[11] = {1000, 1200, 1400, 1600, 1800, 2000, 2500, 3000, 3500, 4000, 4500};
+  h_mjj_passL1FinalORinBXm1_u = fs->make<TH1F>("mjj_passL1FinalORinBXm1_unprefirable", "Dijet Mass (passL1FinalORinBXm1=true)", 10, ptvalues);
+  h_mjj_failL1FinalORinBXm1_u = fs->make<TH1F>("mjj_failL1FinalORinBXm1_unprefirable", "Dijet Mass (passL1FinalORinBXm1=false)", 10, ptvalues);
+  h_deltaR_passL1FinalORinBXm1_u = fs->make<TH1F>("deltaR_passL1FinalORinBXm1_unprefirable", "Dijet DeltaR (passL1FinalORinBXm1=true)", 20, 2, 4);
+  h_deltaR_failL1FinalORinBXm1_u = fs->make<TH1F>("deltaR_failL1FinalORinBXm1_unprefirable", "Dijet DeltaR (passL1FinalORinBXm1=false)", 20, 2, 4);
+  h_deltaPhi_passL1FinalORinBXm1_u = fs->make<TH1F>("deltaPhi_passL1FinalORinBXm1_unprefirable", "Dijet DeltaPhi (passL1FinalORinBXm1=true)", 20, 2.6, 3.15);
+  h_deltaPhi_failL1FinalORinBXm1_u = fs->make<TH1F>("deltaPhi_failL1FinalORinBXm1_unprefirable", "Dijet DeltaPhi (passL1FinalORinBXm1=false)", 20, 2.6, 3.15);
+  h_deltaEta_passL1FinalORinBXm1_u = fs->make<TH1F>("deltaEta_passL1FinalORinXm1_unprefirable", "Dijet DeltaEta (passL1FinalORinBXm1=true)", 20, 0, 2);
+  h_deltaEta_failL1FinalORinBXm1_u = fs->make<TH1F>("deltaEta_failL1FinalORinBXm1_unprefirable", "Dijet DeltaEta (passL1FinalORinBXm1=false)", 20, 0, 2);
+  h_pt0_passL1FinalORinBXm1_u = fs->make<TH1F>("pt0_passL1FinalORinBXm1_unprefirable", "Dijet Leading Jet pT (passL1FinalORinBXm1=true)", 20, 0, 2500);
+  h_pt0_failL1FinalORinBXm1_u = fs->make<TH1F>("pt0_failL1FinalORinBXm1_unprefirable", "Dijet Leading Jet pT (passL1FinalORinBXm1=false)", 20, 0, 2500);
+  h_pt1_passL1FinalORinBXm1_u = fs->make<TH1F>("pt1_passL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet pT (passL1FinalORinBXm1=true)", 20, 0, 2500);
+  h_pt1_failL1FinalORinBXm1_u = fs->make<TH1F>("pt1_failL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet pT (passL1FinalORinBXm1=false)", 20, 0, 2500);
+  h_eta0_passL1FinalORinBXm1_u = fs->make<TH1F>("eta0_passL1FinalORinBXm1_unprefirable", "Dijet Leading Jet Eta (passL1FinalORinBXm1=true)", 20, 0, 2);
+  h_eta0_failL1FinalORinBXm1_u = fs->make<TH1F>("eta0_failL1FinalORinBXm1_unprefirable", "Dijet Leading Jet Eta (passL1FinalORinBXm1=false)", 20, 0, 2);
+  h_eta1_passL1FinalORinBXm1_u = fs->make<TH1F>("eta1_passL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet Eta (passL1FinalORinBXm1=true)", 20, 0, 2);
+  h_eta1_failL1FinalORinBXm1_u = fs->make<TH1F>("eta1_failL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet Eta (passL1FinalORinBXm1=false)", 20, 0, 2);
+  h_phi0_passL1FinalORinBXm1_u = fs->make<TH1F>("phi0_passL1FinalORinBXm1_unprefirable", "Dijet Leading Jet Phi (passL1FinalORinBXm1=true)", 20, -3.15, 3.15);
+  h_phi0_failL1FinalORinBXm1_u = fs->make<TH1F>("phi0_failL1FinalORinBXm1_unprefirable", "Dijet Leading Jet Phi (passL1FinalORinBXm1=false)", 20, -3.15, 3.15);
+  h_phi1_passL1FinalORinBXm1_u = fs->make<TH1F>("phi1_passL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet Phi (passL1FinalORinBXm1=true)", 20, -3.15, 3.15);
+  h_phi1_failL1FinalORinBXm1_u = fs->make<TH1F>("phi1_failL1FinalORinBXm1_unprefirable", "Dijet Subleading Jet Phi (passL1FinalORinBXm1=false)", 20, -3.15, 3.15);
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   setupDataToken_ = esConsumes<SetupData, SetupRecord>();
@@ -436,37 +300,24 @@ constexpr auto deltaR(const L1Jet& l1jet, const RecoJet& recojet) -> decltype(re
 
 template <typename RecoJet, typename L1JetCollection>
 bool checkMatchBX(const RecoJet& recojet, const L1JetCollection& l1jetcollection, int bx, float* l1_pt, float cut, 
-                  TH1I* nbx, TH1F* h_jetet, TH1F* h_jeteta, TH2F* h_jetetaphi, TH2F* h_jetetaphi_on, TH2F* h_jetpteta, TH1F* h_jeteres, TH1F* h_lowrespt) {
+                  TH2F* h_jetetaphi) {
 
   bool match = false;
   float temp = 99.0;
   float matchedPt = 0.0;
-  float matchedEta = 0.0;
-  float matchedPhi = 0.0;
 
   for (auto it = l1jetcollection.begin(bx); it!=l1jetcollection.end(bx); it++){
     // check if deltaR is lower than temp
     if(deltaR(it, recojet)<temp) {
       temp = deltaR(it, recojet);
       matchedPt = it->pt();
-      matchedEta = it->eta();
-      matchedPhi = it->phi();
     }
   } 
 
   if(temp < 0.4) {
     match = true;
     if(matchedPt>cut){
-      nbx->Fill(bx);
-      h_jetet->Fill(recojet.pt());
-      h_jeteta->Fill(recojet.eta());
       h_jetetaphi->Fill(recojet.eta(), recojet.phi());
-      h_jetetaphi_on->Fill(matchedEta,matchedPhi);
-      h_jetpteta->Fill(recojet.pt(), recojet.eta());
-      h_jeteres->Fill(matchedPt/recojet.pt());
-      if(matchedPt/recojet.pt()<0.5){
-        h_lowrespt->Fill(recojet.pt());
-      }
     }
     
     // assign l1 jet pt
@@ -569,121 +420,97 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
     // iterate through reco jets
     for(long unsigned int i = 0; i<(*slimmedJets).size(); i++){
       
-      float l1_pt; // keep track of matched l1 pt
+      float l1_pt_bx0; // keep track of matched l1 pt
+      float l1_pt_bxm1;
+      float l1_pt_bxm2;
+      float l1_pt_bx1;
+      float l1_pt_bx2;
 
       // match jets and fill histograms
       bool match_bx0 = checkMatchBX((*slimmedJets)[i],
                                     jets,
                                     0,
-                                    &l1_pt,
+                                    &l1_pt_bx0,
                                     highCut,
-                                    nbx_f,
-                                    h_jetet_bx0_f,
-                                    h_jeteta_bx0_f,
-                                    h_jetetaphi_bx0_f,
-                                    h_jetetaphi_bx0_on_f,
-                                    h_jetpteta_bx0_f,
-                                    h_jeteres_bx0_f,
-                                    h_lowrespt_bx0_f);
+                                    h_jetetaphi_bx0_f);
       bool match_bxm1 = checkMatchBX((*slimmedJets)[i],
                                      jets,
                                      -1,
-                                     &l1_pt,
+                                     &l1_pt_bxm1,
                                      highCut,
-                                     nbx_f,
-                                     h_jetet_bxm1_f,
-                                     h_jeteta_bxm1_f,
-                                     h_jetetaphi_bxm1_f,
-                                     h_jetetaphi_bxm1_on_f,
-                                     h_jetpteta_bxm1_f,
-                                     h_jeteres_bxm1_f,
-                                     h_lowrespt_bxm1_f);
+                                     h_jetetaphi_bxm1_f);
       bool match_bxm2 = checkMatchBX((*slimmedJets)[i],
                                      jets,
                                      -2,
-                                     &l1_pt,
+                                     &l1_pt_bxm2,
                                      highCut,
-                                     nbx_f,
-                                     h_jetet_bxm2_f,
-                                     h_jeteta_bxm2_f,
-                                     h_jetetaphi_bxm2_f,
-                                     h_jetetaphi_bxm2_on_f,
-                                     h_jetpteta_bxm2_f,
-                                     h_jeteres_bxm2_f,
-                                     h_lowrespt_bxm2_f);
+                                     h_jetetaphi_bxm2_f);
       bool match_bx1 = checkMatchBX((*slimmedJets)[i],
                                     jets,
                                     1,
-                                    &l1_pt,
+                                    &l1_pt_bx1,
                                     highCut,
-                                    nbx_f,
-                                    h_jetet_bx1_f,
-                                    h_jeteta_bx1_f,
-                                    h_jetetaphi_bx1_f,
-                                    h_jetetaphi_bx1_on_f,
-                                    h_jetpteta_bx1_f,
-                                    h_jeteres_bx1_f,
-                                    h_lowrespt_bx1_f);
+                                    h_jetetaphi_bx1_f);
       bool match_bx2 = checkMatchBX((*slimmedJets)[i],
                                     jets,
                                     2,
-                                    &l1_pt,
+                                    &l1_pt_bx2,
                                     highCut,
-                                    nbx_f,
-                                    h_jetet_bx2_f,
-                                    h_jeteta_bx2_f,
-                                    h_jetetaphi_bx2_f,
-                                    h_jetetaphi_bx2_on_f,
-                                    h_jetpteta_bx2_f,
-                                    h_jeteres_bx2_f,
-                                    h_lowrespt_bx2_f);
+                                    h_jetetaphi_bx2_f);
 
-      if((match_bx0 || match_bxm1) && (l1_pt > highCut)){
-        h_jetet_bx0_bxm1_f->Fill((*slimmedJets)[i].pt());
-        h_jeteta_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+      if((match_bx0 && l1_pt_bx0 > highCut) || (match_bxm1 && l1_pt_bxm1 > highCut)){
         h_jetetaphi_bx0_bxm1_f->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
-      }
-
-      if((match_bxm1 && !match_bx0) && (l1_pt > highCut)){
-        h_jetpteta_bxm1_nobx0_f->Fill((*slimmedJets)[i].pt(), (*slimmedJets)[i].eta());
       }
 
       // pT separated hists for bx=0
       if(match_bx0){
-        if(l1_pt>lowCut){
+        if(l1_pt_bx0>lowCut){
           h_jeteta_lowpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>medCut){
+        if(l1_pt_bx0>medCut){
           h_jeteta_medpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>highCut){
+        if(l1_pt_bx0>highCut){
           h_jeteta_highpt_bx0_f->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=-1
       if(match_bxm1){
-        if(l1_pt>lowCut){
+        if(l1_pt_bxm1>lowCut){
           h_jeteta_lowpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>medCut){
+        if(l1_pt_bxm1>medCut){
           h_jeteta_medpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>highCut){
+        if(l1_pt_bxm1>highCut){
           h_jeteta_highpt_bxm1_f->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=0 or bx=-1
       if(match_bx0 || match_bxm1){
-        if(l1_pt>lowCut){
-          h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+        if(match_bx0){
+          if(l1_pt_bx0>lowCut){
+            h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bx0>medCut){
+            h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bx0>highCut){
+            h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
         }
-        if(l1_pt>medCut){
-          h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
-        }
-        if(l1_pt>highCut){
-          h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+        else{
+          if(l1_pt_bxm1>lowCut){
+            h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bxm1>medCut){
+            h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bxm1>highCut){
+            h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
         }
       }
 
@@ -699,20 +526,6 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
       Flag_IsUnprefirable = handleUnprefEventResults->at(0, 0).getExternalDecision(GlobalExtBlk::maxExternalConditions-1);
     }
   }
-
-  // for checking which events pass which flag 
-  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_AK8PFJet500 ) h_nevt->Fill(0);
-  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && !passHLT_AK8PFJet500 ) h_nevt->Fill(1);
-  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_AK8PFJet500 ) h_nevt->Fill(2); 
-  if (!Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_AK8PFJet500 ) h_nevt->Fill(3);
-  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_AK8PFJet500 ) h_nevt->Fill(4);
-  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain && passHLT_AK8PFJet500 ) h_nevt->Fill(5);
-  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && !passHLT_AK8PFJet500 ) h_nevt->Fill(6);
-  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain && passHLT_AK8PFJet500 ) h_nevt->Fill(7);
-
-  if (Flag_IsUnprefirable && Flag_FirstBunchInTrain) h_passboth->Fill(iEvent.id().run());
-  if (Flag_IsUnprefirable && !Flag_FirstBunchInTrain) h_passUP->Fill(iEvent.id().run());
-  if (!Flag_IsUnprefirable && Flag_FirstBunchInTrain) h_passFB->Fill(iEvent.id().run());
 
   if(Flag_IsUnprefirable && passHLT_AK8PFJet500){
 
@@ -754,121 +567,97 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
          }
       }
 
-      float l1_pt;
+      float l1_pt_bx0; // keep track of matched l1 pt
+      float l1_pt_bxm1;
+      float l1_pt_bxm2;
+      float l1_pt_bx1;
+      float l1_pt_bx2;
 
       // match jets and fill histograms
       bool match_bx0 = checkMatchBX((*slimmedJets)[i], 
                                     jets, 
                                     0, 
-                                    &l1_pt,
+                                    &l1_pt_bx0,
                                     highCut,
-                                    nbx_u, 
-                                    h_jetet_bx0_u, 
-                                    h_jeteta_bx0_u, 
-                                    h_jetetaphi_bx0_u, 
-                                    h_jetetaphi_bx0_on_u, 
-                                    h_jetpteta_bx0_u, 
-                                    h_jeteres_bx0_u, 
-                                    h_lowrespt_bx0_u);
+                                    h_jetetaphi_bx0_u);
       bool match_bxm1 = checkMatchBX((*slimmedJets)[i],
                                      jets,
                                      -1,
-                                     &l1_pt,
+                                     &l1_pt_bxm1,
                                      highCut,
-                                     nbx_u,
-                                     h_jetet_bxm1_u,
-                                     h_jeteta_bxm1_u,
-                                     h_jetetaphi_bxm1_u,
-                                     h_jetetaphi_bxm1_on_u,
-                                     h_jetpteta_bxm1_u,
-                                     h_jeteres_bxm1_u,
-                                     h_lowrespt_bxm1_u);
+                                     h_jetetaphi_bxm1_u);
       bool match_bxm2 = checkMatchBX((*slimmedJets)[i],
                                      jets,
                                      -2,
-                                     &l1_pt,
+                                     &l1_pt_bxm2,
                                      highCut,
-                                     nbx_u,
-                                     h_jetet_bxm2_u,
-                                     h_jeteta_bxm2_u,
-                                     h_jetetaphi_bxm2_u,
-                                     h_jetetaphi_bxm2_on_u,
-                                     h_jetpteta_bxm2_u,
-                                     h_jeteres_bxm2_u,
-                                     h_lowrespt_bxm2_u);
+                                     h_jetetaphi_bxm2_u);
       bool match_bx1 = checkMatchBX((*slimmedJets)[i],
                                     jets,
                                     1,
-                                    &l1_pt,
+                                    &l1_pt_bx1,
                                     highCut,
-                                    nbx_u,
-                                    h_jetet_bx1_u,
-                                    h_jeteta_bx1_u,
-                                    h_jetetaphi_bx1_u,
-                                    h_jetetaphi_bx1_on_u,
-                                    h_jetpteta_bx1_u,
-                                    h_jeteres_bx1_u,
-                                    h_lowrespt_bx1_u);
+                                    h_jetetaphi_bx1_u);
       bool match_bx2 = checkMatchBX((*slimmedJets)[i],
                                     jets,
                                     2,
-                                    &l1_pt,
+                                    &l1_pt_bx2,
                                     highCut,
-                                    nbx_u,
-                                    h_jetet_bx2_u,
-                                    h_jeteta_bx2_u,
-                                    h_jetetaphi_bx2_u,
-                                    h_jetetaphi_bx2_on_u,
-                                    h_jetpteta_bx2_u,
-                                    h_jeteres_bx2_u,
-                                    h_lowrespt_bx2_u);
+                                    h_jetetaphi_bx2_u);
 
-      if((match_bx0 || match_bxm1) && (l1_pt>highCut)){
-        h_jetet_bx0_bxm1_u->Fill((*slimmedJets)[i].pt());
-        h_jeteta_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
+      if((match_bx0 && l1_pt_bx0 > highCut) || (match_bxm1 && l1_pt_bxm1 > highCut)){
         h_jetetaphi_bx0_bxm1_u->Fill((*slimmedJets)[i].eta(), (*slimmedJets)[i].phi());
-      }
-
-      if((match_bxm1 && !match_bx0) && (l1_pt>highCut)){
-        h_jetpteta_bxm1_nobx0_u->Fill((*slimmedJets)[i].pt(), (*slimmedJets)[i].eta());
       }
 
       // pT separated hists for bx=0
       if(match_bx0){
-        if(l1_pt>lowCut){
+        if(l1_pt_bx0>lowCut){
           h_jeteta_lowpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>medCut){
+        if(l1_pt_bx0>medCut){
           h_jeteta_medpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>highCut){
+        if(l1_pt_bx0>highCut){
           h_jeteta_highpt_bx0_u->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=-1
       if(match_bxm1){
-        if(l1_pt>lowCut){
+        if(l1_pt_bxm1>lowCut){
           h_jeteta_lowpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>medCut){
+        if(l1_pt_bxm1>medCut){
           h_jeteta_medpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
-        if(l1_pt>highCut){
+        if(l1_pt_bxm1>highCut){
           h_jeteta_highpt_bxm1_u->Fill((*slimmedJets)[i].eta());
         }
       }
 
       // pT separated hists for bx=0 or bx=-1
       if(match_bx0 || match_bxm1){
-        if(l1_pt>lowCut){
-          h_jeteta_lowpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
+        if(match_bx0){
+          if(l1_pt_bx0>lowCut){
+            h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bx0>medCut){
+            h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bx0>highCut){
+            h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
         }
-        if(l1_pt>medCut){
-          h_jeteta_medpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
-        }
-        if(l1_pt>highCut){
-          h_jeteta_highpt_bx0_bxm1_u->Fill((*slimmedJets)[i].eta());
+        else{
+          if(l1_pt_bxm1>lowCut){
+            h_jeteta_lowpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bxm1>medCut){
+            h_jeteta_medpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
+          if(l1_pt_bxm1>highCut){
+            h_jeteta_highpt_bx0_bxm1_f->Fill((*slimmedJets)[i].eta());
+          }
         }
       }
 
@@ -884,8 +673,30 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
       j2.SetPtEtaPhiE(jetpt2, jeteta2, jetphi2, jetE2);
       float mjj = (j1+j2).M();
       if ((mjj > 500) && (phiAbs(jetphi1, jetphi2) > 2.7) && (abs(jeteta1 - jeteta2) < 1.3)){
-        if (_l1FinalOR_noFirstBunchBeforeTrain_BXmin1) h_mjj_passL1FinalORinBXm1_u->Fill(mjj); 
-        else h_mjj_failL1FinalORinBXm1_u->Fill(mjj);
+        if (_l1FinalOR_noFirstBunchBeforeTrain_BXmin1) {
+          h_mjj_passL1FinalORinBXm1_u->Fill(mjj); 
+          h_deltaR_passL1FinalORinBXm1_u->Fill(sqrt(pow(phiAbs(jetphi1, jetphi2),2.0) + pow(jeteta1 - jeteta2,2.0)));
+          h_deltaPhi_passL1FinalORinBXm1_u->Fill(phiAbs(jetphi1, jetphi2));
+          h_deltaEta_passL1FinalORinBXm1_u->Fill(abs(jeteta1 - jeteta2));
+          h_pt0_passL1FinalORinBXm1_u->Fill(jetpt1);
+          h_pt1_passL1FinalORinBXm1_u->Fill(jetpt2);
+          h_eta0_passL1FinalORinBXm1_u->Fill(jeteta1);
+          h_eta1_passL1FinalORinBXm1_u->Fill(jeteta2);
+          h_phi0_passL1FinalORinBXm1_u->Fill(jetphi1);
+          h_phi1_passL1FinalORinBXm1_u->Fill(jetphi2);
+        }
+        else {
+          h_mjj_failL1FinalORinBXm1_u->Fill(mjj);
+          h_deltaR_failL1FinalORinBXm1_u->Fill(sqrt(pow(phiAbs(jetphi1, jetphi2),2.0) + pow(jeteta1 - jeteta2,2.0)));
+          h_deltaPhi_failL1FinalORinBXm1_u->Fill(phiAbs(jetphi1, jetphi2));
+          h_deltaEta_failL1FinalORinBXm1_u->Fill(abs(jeteta1 - jeteta2));
+          h_pt0_failL1FinalORinBXm1_u->Fill(jetpt1);
+          h_pt1_failL1FinalORinBXm1_u->Fill(jetpt2);
+          h_eta0_failL1FinalORinBXm1_u->Fill(jeteta1);
+          h_eta1_failL1FinalORinBXm1_u->Fill(jeteta2);
+          h_phi0_failL1FinalORinBXm1_u->Fill(jetphi1);
+          h_phi1_failL1FinalORinBXm1_u->Fill(jetphi2);
+        }
       }
     }
 
