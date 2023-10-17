@@ -567,7 +567,7 @@ def main(file_path, out_dir):
     JetEta_low_ratio_f.GetXaxis().SetTitle("Reco Jet #eta")
     JetEta_low_ratio_f.GetYaxis().SetTitle("(bx=-1)/(bx=-1 or bx=0)")
     JetEta_low_ratio_f.SetMinimum(0)
-    JetEta_low_ratio_f.SetMaximum(0.037)
+    JetEta_low_ratio_f.SetMaximum(0.01)
     JetEta_low_ratio_f.SetStats(False)
     JetEta_low_ratio_f.Draw("E")
 
