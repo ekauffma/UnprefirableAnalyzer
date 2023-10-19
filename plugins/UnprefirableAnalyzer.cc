@@ -113,6 +113,7 @@ private:
   vector<TLorentzVector> match_l1_bxm2;
   vector<TLorentzVector> match_l1_bx1;
   vector<TLorentzVector> match_l1_bx2; 
+  int idx_L1_FirstBunchBeforeTrain;
 
 #ifdef THIS_IS_AN_EVENTSETUP_EXAMPLE
   edm::ESGetToken<SetupData, SetupRecord> setupToken_;
@@ -147,7 +148,8 @@ UnprefirableAnalyzer::UnprefirableAnalyzer(const edm::ParameterSet& iConfig):
   eventTree->Branch("isUnprefirable",  &isUnprefirable,   "isUnprefirable/I");
   eventTree->Branch("isFirstBunchInTrain",  &isFirstBunchInTrain,   "isFirstBunchInTrain/I");
   eventTree->Branch("L1FinalOR_bxm1", &L1FinalOR_bxm1, "L1FinalOR_bxm1/I");
-  
+  eventTree->Branch("idx_L1_FirstBunchBeforeTrain", &idx_L1_FirstBunchBeforeTrain, "idx_L1_FirstBunchBeforeTrain/I"); 
+ 
   eventTree->Branch("trigger_bits", "vector<bool>", &trigger_bits, 32000, 0);
 
   eventTree->Branch("reco_jets", "vector<TLorentzVector>", &reco_jets, 32000, 0);

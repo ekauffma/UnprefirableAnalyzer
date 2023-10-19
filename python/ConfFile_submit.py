@@ -8,7 +8,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                                 # replace 'myfile.root' with the source file you want to use
-                                fileNames = cms.untracked.vstring('/store/data/Run2023C/ZeroBias/MINIAOD/PromptReco-v4/000/368/423/00000/23a45b1e-da4c-442d-bcb8-df5735c99ef7.root')
+                                fileNames = cms.untracked.vstring('file:/eos/cms/store/data/Run2023C/JetMET0/MINIAOD/22Sep2023_v1-v1/30000/56222725-fbae-46ca-96f8-f91acf1dc8ec.root')
                             )
 
 process.TFileService = cms.Service("TFileService",
