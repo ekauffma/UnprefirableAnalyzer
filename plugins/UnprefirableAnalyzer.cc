@@ -382,21 +382,27 @@ void UnprefirableAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSet
       reco_jets.push_back(reco_jet);
       reco_jetId.push_back(currentJetId);
 
-      if(match_bx0){
-        match_l1_bx0.push_back(l1_jet_bx0);
+      if(!match_bx0) {
+        l1_jet_bx0.SetPtEtaPhiE(0.0, 0.0, 0.0, 0.0);
       }
-      if(match_bxm1){
-        match_l1_bxm1.push_back(l1_jet_bxm1);
+      match_l1_bx0.push_back(l1_jet_bx0);
+      if(!match_bxm1) {
+        l1_jet_bxm1.SetPtEtaPhiE(0.0, 0.0, 0.0, 0.0);
       }
-      if(match_bxm2){
-        match_l1_bxm2.push_back(l1_jet_bxm2);
+      match_l1_bxm1.push_back(l1_jet_bxm1);
+      if(!match_bxm2) {
+        l1_jet_bxm2.SetPtEtaPhiE(0.0, 0.0, 0.0, 0.0);
       }
-      if(match_bx1){
-        match_l1_bx1.push_back(l1_jet_bx1);
+      match_l1_bxm2.push_back(l1_jet_bxm2);
+      if(!match_bx1) {
+        l1_jet_bx1.SetPtEtaPhiE(0.0, 0.0, 0.0, 0.0);
       }
-      if(match_bx2){
-        match_l1_bx2.push_back(l1_jet_bx2);
+      match_l1_bx1.push_back(l1_jet_bx1);
+      if(!match_bx2) {
+        l1_jet_bx2.SetPtEtaPhiE(0.0, 0.0, 0.0, 0.0);
       }
+      match_l1_bx2.push_back(l1_jet_bx2);
+
     }
     if(isFirstBunchInTrain || isUnprefirable) {
       eventTree->Fill();
